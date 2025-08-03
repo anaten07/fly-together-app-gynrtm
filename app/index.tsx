@@ -89,7 +89,6 @@ export default function HomeScreen() {
 
   const handleFilterPress = (filterId: string) => {
     setActiveFilter(filterId);
-    // In a real app, this would filter the pilots based on the selected category
     console.log('Filter selected:', filterId);
   };
 
@@ -100,63 +99,76 @@ export default function HomeScreen() {
 
   return (
     <View style={commonStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.secondary} />
       
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        {/* Enhanced Header with Fly Encore Branding */}
+        {/* Sleek Black & Orange Header */}
         <LinearGradient
-          colors={['#667eea', '#764ba2', '#5441cc']}
+          colors={['#000000', '#1A1A1A', '#FF6B35']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[commonStyles.headerGradient, { paddingTop: 70, paddingBottom: 40 }]}
+          style={[commonStyles.headerGradient, { paddingTop: 70, paddingBottom: 50 }]}
         >
           <View style={{ alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+            {/* Logo and Brand */}
+            <View style={{ 
+              flexDirection: 'row', 
+              alignItems: 'center', 
+              marginBottom: 16,
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              paddingHorizontal: 24,
+              paddingVertical: 12,
+              borderRadius: 30,
+              borderWidth: 1,
+              borderColor: 'rgba(255, 107, 53, 0.3)',
+            }}>
               <Icon 
                 name="airplane" 
-                size={32} 
-                color={colors.background} 
+                size={28} 
+                color={colors.textInverse} 
                 style={{ marginRight: 12, transform: [{ rotate: '45deg' }] }} 
               />
               <Text style={[commonStyles.titleLarge, { 
-                color: colors.background, 
-                fontSize: 42, 
+                color: colors.textInverse, 
+                fontSize: 38, 
                 fontWeight: '900',
                 letterSpacing: -1.5,
-                textShadowColor: 'rgba(0,0,0,0.3)',
+                textShadowColor: 'rgba(255, 107, 53, 0.5)',
                 textShadowOffset: { width: 0, height: 2 },
-                textShadowRadius: 4,
+                textShadowRadius: 8,
               }]}>
                 Fly Encore
               </Text>
             </View>
+            
             <Text style={[commonStyles.text, { 
-              color: colors.background, 
+              color: colors.textInverse, 
               opacity: 0.95, 
               textAlign: 'center',
               fontSize: 18,
               fontWeight: '500',
               letterSpacing: 0.5,
-              textShadowColor: 'rgba(0,0,0,0.2)',
-              textShadowOffset: { width: 0, height: 1 },
-              textShadowRadius: 2,
+              marginBottom: 20,
             }]}>
               Connect with certified pilots for extraordinary flights
             </Text>
+            
+            {/* Location Badge */}
             <View style={{ 
               flexDirection: 'row', 
-              alignItems: 'center', 
-              marginTop: 16,
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              borderRadius: 20,
+              alignItems: 'center',
+              backgroundColor: colors.primary,
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              borderRadius: 25,
+              ...shadows.orange,
             }}>
-              <Icon name="location" size={16} color={colors.background} />
-              <Text style={[commonStyles.textLight, { 
-                color: colors.background, 
-                marginLeft: 6,
-                fontWeight: '600',
+              <Icon name="location" size={18} color={colors.textInverse} />
+              <Text style={[commonStyles.textMedium, { 
+                color: colors.textInverse, 
+                marginLeft: 8,
+                fontWeight: '700',
+                fontSize: 16,
               }]}>
                 San Francisco Bay Area
               </Text>
@@ -164,15 +176,15 @@ export default function HomeScreen() {
           </View>
         </LinearGradient>
 
-        {/* Enhanced Search Bar */}
-        <View style={{ paddingHorizontal: 20, marginTop: -25, zIndex: 1 }}>
+        {/* Elevated Search Bar */}
+        <View style={{ paddingHorizontal: 20, marginTop: -30, zIndex: 1 }}>
           <View style={[commonStyles.searchContainer, { 
             ...shadows.large,
             backgroundColor: colors.background,
-            borderWidth: 1,
-            borderColor: colors.borderLight,
+            borderWidth: 2,
+            borderColor: colors.primary,
           }]}>
-            <Icon name="search" size={22} color={colors.primary} />
+            <Icon name="search" size={24} color={colors.primary} />
             <TextInput
               style={[commonStyles.searchInput, { fontSize: 17, fontWeight: '500' }]}
               placeholder="Search pilots, aircraft, or location..."
@@ -182,90 +194,118 @@ export default function HomeScreen() {
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => handleSearch('')}>
-                <Icon name="close-circle" size={22} color={colors.textMuted} />
+                <Icon name="close-circle" size={24} color={colors.textMuted} />
               </TouchableOpacity>
             )}
           </View>
         </View>
 
-        {/* Enhanced Stats Cards */}
-        <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
+        {/* Modern Stats Cards */}
+        <View style={{ paddingHorizontal: 20, marginVertical: 30 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{ flexDirection: 'row', gap: 16 }}>
-              <LinearGradient
-                colors={['#667eea', '#764ba2']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={[commonStyles.cardCompact, { 
-                  minWidth: 140, 
-                  alignItems: 'center',
-                  ...shadows.colored,
-                }]}
-              >
-                <Icon name="people" size={28} color={colors.background} backgroundColor="rgba(255,255,255,0.2)" padding={10} />
+              {/* Active Pilots Card */}
+              <View style={[commonStyles.cardCompact, { 
+                minWidth: 150, 
+                alignItems: 'center',
+                backgroundColor: colors.secondary,
+                borderColor: colors.primary,
+                borderWidth: 2,
+                ...shadows.orange,
+              }]}>
+                <View style={{
+                  backgroundColor: colors.primary,
+                  borderRadius: 20,
+                  padding: 12,
+                  marginBottom: 12,
+                }}>
+                  <Icon name="people" size={28} color={colors.textInverse} />
+                </View>
                 <Text style={[commonStyles.subtitleMedium, { 
-                  marginTop: 12, 
                   marginBottom: 4, 
-                  color: colors.background,
-                  fontSize: 24,
-                  fontWeight: '800',
+                  color: colors.textInverse,
+                  fontSize: 28,
+                  fontWeight: '900',
                 }]}>
                   {mockPilots.length}
                 </Text>
-                <Text style={[commonStyles.textMuted, { color: 'rgba(255,255,255,0.8)', fontWeight: '600' }]}>
+                <Text style={[commonStyles.textMuted, { 
+                  color: colors.primary, 
+                  fontWeight: '700',
+                  fontSize: 14,
+                }]}>
                   Active Pilots
                 </Text>
-              </LinearGradient>
+              </View>
               
-              <LinearGradient
-                colors={['#06B6D4', '#67E8F9']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={[commonStyles.cardCompact, { 
-                  minWidth: 140, 
-                  alignItems: 'center',
-                  ...shadows.medium,
-                }]}
-              >
-                <Icon name="airplane" size={28} color={colors.background} backgroundColor="rgba(255,255,255,0.2)" padding={10} />
+              {/* Aircraft Types Card */}
+              <View style={[commonStyles.cardCompact, { 
+                minWidth: 150, 
+                alignItems: 'center',
+                backgroundColor: colors.background,
+                borderColor: colors.secondary,
+                borderWidth: 2,
+                ...shadows.medium,
+              }]}>
+                <View style={{
+                  backgroundColor: colors.secondary,
+                  borderRadius: 20,
+                  padding: 12,
+                  marginBottom: 12,
+                }}>
+                  <Icon name="airplane" size={28} color={colors.textInverse} />
+                </View>
                 <Text style={[commonStyles.subtitleMedium, { 
-                  marginTop: 12, 
                   marginBottom: 4, 
-                  color: colors.background,
-                  fontSize: 24,
-                  fontWeight: '800',
+                  color: colors.text,
+                  fontSize: 28,
+                  fontWeight: '900',
                 }]}>
                   12
                 </Text>
-                <Text style={[commonStyles.textMuted, { color: 'rgba(255,255,255,0.8)', fontWeight: '600' }]}>
+                <Text style={[commonStyles.textMuted, { 
+                  color: colors.textLight, 
+                  fontWeight: '700',
+                  fontSize: 14,
+                }]}>
                   Aircraft Types
                 </Text>
-              </LinearGradient>
+              </View>
               
-              <LinearGradient
-                colors={['#F59E0B', '#FCD34D']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={[commonStyles.cardCompact, { 
-                  minWidth: 140, 
-                  alignItems: 'center',
-                  ...shadows.medium,
-                }]}
-              >
-                <Icon name="star" size={28} color={colors.background} backgroundColor="rgba(255,255,255,0.2)" padding={10} />
+              {/* Average Rating Card */}
+              <View style={[commonStyles.cardCompact, { 
+                minWidth: 150, 
+                alignItems: 'center',
+                backgroundColor: colors.primary,
+                borderColor: colors.secondary,
+                borderWidth: 2,
+                ...shadows.orange,
+              }]}>
+                <View style={{
+                  backgroundColor: colors.textInverse,
+                  borderRadius: 20,
+                  padding: 12,
+                  marginBottom: 12,
+                }}>
+                  <Icon name="star" size={28} color={colors.primary} />
+                </View>
                 <Text style={[commonStyles.subtitleMedium, { 
-                  marginTop: 12, 
                   marginBottom: 4, 
-                  color: colors.background,
-                  fontSize: 24,
-                  fontWeight: '800',
+                  color: colors.textInverse,
+                  fontSize: 28,
+                  fontWeight: '900',
                 }]}>
                   4.8
                 </Text>
-                <Text style={[commonStyles.textMuted, { color: 'rgba(255,255,255,0.8)', fontWeight: '600' }]}>
+                <Text style={[commonStyles.textMuted, { 
+                  color: colors.textInverse, 
+                  fontWeight: '700',
+                  fontSize: 14,
+                  opacity: 0.9,
+                }]}>
                   Avg Rating
                 </Text>
-              </LinearGradient>
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -275,9 +315,14 @@ export default function HomeScreen() {
           <MapView pilots={mockPilots} />
         </View>
 
-        {/* Enhanced Filter Buttons */}
-        <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
-          <Text style={[commonStyles.subtitleMedium, { marginBottom: 16, fontSize: 20, fontWeight: '700' }]}>
+        {/* Sleek Filter Buttons */}
+        <View style={{ paddingHorizontal: 20, marginVertical: 30 }}>
+          <Text style={[commonStyles.subtitleMedium, { 
+            marginBottom: 20, 
+            fontSize: 22, 
+            fontWeight: '800',
+            color: colors.text,
+          }]}>
             Categories
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -286,16 +331,15 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   key={category.id}
                   style={[
-                    commonStyles.badge,
                     {
-                      backgroundColor: activeFilter === category.id ? colors.primary : colors.surfaceAlt,
+                      backgroundColor: activeFilter === category.id ? colors.secondary : colors.background,
                       flexDirection: 'row',
                       alignItems: 'center',
-                      paddingHorizontal: 20,
-                      paddingVertical: 12,
-                      borderRadius: 25,
-                      borderWidth: activeFilter === category.id ? 0 : 1,
-                      borderColor: colors.border,
+                      paddingHorizontal: 24,
+                      paddingVertical: 14,
+                      borderRadius: 30,
+                      borderWidth: 2,
+                      borderColor: activeFilter === category.id ? colors.primary : colors.border,
                       ...shadows.small,
                     }
                   ]}
@@ -303,16 +347,15 @@ export default function HomeScreen() {
                 >
                   <Icon 
                     name={category.icon as any} 
-                    size={18} 
-                    color={activeFilter === category.id ? colors.background : colors.text} 
+                    size={20} 
+                    color={activeFilter === category.id ? colors.textInverse : colors.text} 
                   />
                   <Text style={[
-                    commonStyles.badgeText,
                     {
-                      color: activeFilter === category.id ? colors.background : colors.text,
-                      marginLeft: 8,
-                      fontSize: 14,
-                      fontWeight: '600',
+                      color: activeFilter === category.id ? colors.textInverse : colors.text,
+                      marginLeft: 10,
+                      fontSize: 16,
+                      fontWeight: '700',
                     }
                   ]}>
                     {category.name}
@@ -325,21 +368,33 @@ export default function HomeScreen() {
 
         {/* Enhanced Pilots List */}
         <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <Text style={[commonStyles.subtitle, { fontSize: 22, fontWeight: '700' }]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 25 }}>
+            <Text style={[commonStyles.subtitle, { 
+              fontSize: 24, 
+              fontWeight: '800',
+              color: colors.text,
+            }]}>
               Available Pilots ({filteredPilots.length})
             </Text>
             <TouchableOpacity style={{ 
               flexDirection: 'row', 
               alignItems: 'center',
               backgroundColor: colors.surfaceAlt,
-              paddingHorizontal: 12,
-              paddingVertical: 8,
-              borderRadius: 20,
+              paddingHorizontal: 16,
+              paddingVertical: 10,
+              borderRadius: 25,
+              borderWidth: 1,
+              borderColor: colors.border,
               ...shadows.small,
             }}>
-              <Text style={[commonStyles.textLight, { marginRight: 6, fontWeight: '600' }]}>Sort by</Text>
-              <Icon name="funnel-outline" size={16} color={colors.textLight} />
+              <Text style={[commonStyles.textLight, { 
+                marginRight: 8, 
+                fontWeight: '700',
+                color: colors.text,
+              }]}>
+                Sort by
+              </Text>
+              <Icon name="funnel-outline" size={18} color={colors.text} />
             </TouchableOpacity>
           </View>
           
@@ -352,12 +407,27 @@ export default function HomeScreen() {
           ))}
           
           {filteredPilots.length === 0 && (
-            <View style={[commonStyles.cardElevated, { alignItems: 'center', paddingVertical: 50 }]}>
-              <Icon name="search" size={64} color={colors.textMuted} />
-              <Text style={[commonStyles.subtitle, { marginTop: 20, color: colors.textMuted, fontSize: 20 }]}>
+            <View style={[commonStyles.cardElevated, { 
+              alignItems: 'center', 
+              paddingVertical: 60,
+              backgroundColor: colors.backgroundAlt,
+              borderColor: colors.border,
+            }]}>
+              <Icon name="search" size={72} color={colors.textMuted} />
+              <Text style={[commonStyles.subtitle, { 
+                marginTop: 24, 
+                color: colors.textMuted, 
+                fontSize: 22,
+                fontWeight: '700',
+              }]}>
                 No pilots found
               </Text>
-              <Text style={[commonStyles.textLight, { textAlign: 'center', marginTop: 12, fontSize: 16 }]}>
+              <Text style={[commonStyles.textLight, { 
+                textAlign: 'center', 
+                marginTop: 12, 
+                fontSize: 16,
+                color: colors.textLight,
+              }]}>
                 Try adjusting your search criteria or filters
               </Text>
             </View>

@@ -41,9 +41,11 @@ const styles = StyleSheet.create({
   },
   primary: {
     backgroundColor: colors.primary,
+    ...shadows.orange,
   },
   secondary: {
     backgroundColor: colors.secondary,
+    ...shadows.medium,
   },
   outline: {
     backgroundColor: 'transparent',
@@ -52,29 +54,31 @@ const styles = StyleSheet.create({
   },
   ghost: {
     backgroundColor: colors.surfaceAlt,
+    borderWidth: 1,
+    borderColor: colors.border,
     ...shadows.small,
   },
   gradient: {
-    ...shadows.colored,
+    ...shadows.orange,
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     letterSpacing: 0.3,
   },
   buttonTextSmall: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   buttonTextLarge: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   primaryText: {
-    color: colors.background,
+    color: colors.textInverse,
   },
   secondaryText: {
-    color: colors.background,
+    color: colors.textInverse,
   },
   outlineText: {
     color: colors.primary,
@@ -188,7 +192,7 @@ export default function Button({
         activeOpacity={0.8}
       >
         <LinearGradient
-          colors={gradients.primary}
+          colors={gradients.blackToOrange}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={[StyleSheet.absoluteFill, { borderRadius: size === 'small' ? 25 : size === 'large' ? 35 : 30 }]}

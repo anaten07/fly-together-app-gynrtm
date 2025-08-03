@@ -2,45 +2,61 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const colors = {
-  primary: '#5441cc',        // Modern indigo - Fly Encore brand color
-  primaryLight: '#6366F1',   // Lighter indigo
-  primaryDark: '#4F46E5',    // Darker indigo
-  secondary: '#06B6D4',      // Cyan
-  secondaryLight: '#67E8F9', // Light cyan
-  accent: '#F59E0B',         // Amber
-  accentLight: '#FCD34D',    // Light amber
-  background: '#FFFFFF',     // White
-  backgroundAlt: '#F8FAFC',  // Very light gray
-  backgroundDark: '#0F172A', // Dark slate
-  surface: '#FFFFFF',        // White surface
-  surfaceAlt: '#F1F5F9',     // Light surface
-  text: '#1E293B',           // Dark slate
-  textLight: '#64748B',      // Slate
-  textMuted: '#94A3B8',      // Light slate
-  grey: '#E2E8F0',           // Light grey
-  greyDark: '#475569',       // Dark grey
-  card: '#FFFFFF',           // White card background
-  border: '#E2E8F0',         // Border color
-  borderLight: '#F1F5F9',    // Light border
-  success: '#10B981',        // Emerald
-  successLight: '#6EE7B7',   // Light emerald
-  warning: '#F59E0B',        // Amber
-  warningLight: '#FCD34D',   // Light amber
-  danger: '#EF4444',         // Red
-  dangerLight: '#FCA5A5',    // Light red
+  // Primary brand colors - Black, White, Orange
+  primary: '#FF6B35',           // Vibrant orange - main brand color
+  primaryLight: '#FF8A65',      // Light orange
+  primaryDark: '#E65100',       // Dark orange
+  secondary: '#000000',         // Pure black
+  secondaryLight: '#212121',    // Dark gray
+  accent: '#FF6B35',            // Orange accent
+  accentLight: '#FFB74D',       // Light orange accent
+  
+  // Background colors
+  background: '#FFFFFF',        // Pure white
+  backgroundAlt: '#FAFAFA',     // Very light gray
+  backgroundDark: '#000000',    // Pure black
+  surface: '#FFFFFF',           // White surface
+  surfaceAlt: '#F5F5F5',        // Light gray surface
+  surfaceDark: '#121212',       // Dark surface
+  
+  // Text colors
+  text: '#000000',              // Black text
+  textLight: '#424242',         // Dark gray text
+  textMuted: '#757575',         // Medium gray text
+  textInverse: '#FFFFFF',       // White text for dark backgrounds
+  
+  // Utility colors
+  grey: '#E0E0E0',              // Light grey
+  greyDark: '#424242',          // Dark grey
+  card: '#FFFFFF',              // White card background
+  cardDark: '#1A1A1A',          // Dark card background
+  border: '#E0E0E0',            // Light border
+  borderDark: '#333333',        // Dark border
+  
+  // Status colors
+  success: '#4CAF50',           // Green
+  successLight: '#81C784',      // Light green
+  warning: '#FF9800',           // Orange warning
+  warningLight: '#FFB74D',      // Light orange
+  danger: '#F44336',            // Red
+  dangerLight: '#EF5350',       // Light red
+  
+  // Shadow colors
   shadow: 'rgba(0, 0, 0, 0.1)',
-  shadowDark: 'rgba(0, 0, 0, 0.2)',
+  shadowMedium: 'rgba(0, 0, 0, 0.15)',
+  shadowDark: 'rgba(0, 0, 0, 0.25)',
+  shadowOrange: 'rgba(255, 107, 53, 0.3)',
 };
 
 export const gradients = {
-  primary: ['#6366F1', '#8B5CF6'],
-  secondary: ['#06B6D4', '#67E8F9'],
-  accent: ['#F59E0B', '#FCD34D'],
-  success: ['#10B981', '#6EE7B7'],
-  sunset: ['#FF6B6B', '#FFE66D'],
-  ocean: ['#667eea', '#764ba2'],
-  sky: ['#74b9ff', '#0984e3'],
-  flyEncore: ['#667eea', '#764ba2', '#5441cc'], // Fly Encore brand gradient
+  primary: ['#FF6B35', '#FF8A65'],
+  secondary: ['#000000', '#212121'],
+  accent: ['#FF6B35', '#FFB74D'],
+  blackToOrange: ['#000000', '#FF6B35'],
+  orangeToBlack: ['#FF6B35', '#000000'],
+  whiteToOrange: ['#FFFFFF', '#FF6B35'],
+  flyEncore: ['#000000', '#FF6B35', '#FFFFFF'],
+  subtle: ['rgba(255, 107, 53, 0.1)', 'rgba(255, 107, 53, 0.05)'],
 };
 
 export const shadows = {
@@ -52,28 +68,28 @@ export const shadows = {
     elevation: 2,
   },
   medium: {
-    shadowColor: colors.shadow,
+    shadowColor: colors.shadowMedium,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 4,
   },
   large: {
-    shadowColor: colors.shadow,
+    shadowColor: colors.shadowDark,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.2,
     shadowRadius: 16,
     elevation: 8,
   },
-  colored: {
-    shadowColor: colors.primary,
+  orange: {
+    shadowColor: colors.shadowOrange,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 6,
   },
   flyEncore: {
-    shadowColor: '#667eea',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.25,
     shadowRadius: 14,
@@ -86,12 +102,12 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: colors.primary,
     alignSelf: 'center',
     width: '100%',
-    ...shadows.medium,
+    ...shadows.orange,
   },
   primaryGradient: {
     alignSelf: 'center',
     width: '100%',
-    ...shadows.colored,
+    ...shadows.orange,
   },
   secondary: {
     backgroundColor: colors.secondary,
@@ -103,7 +119,7 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: colors.accent,
     alignSelf: 'center',
     width: '100%',
-    ...shadows.medium,
+    ...shadows.orange,
   },
   outline: {
     backgroundColor: 'transparent',
@@ -118,7 +134,7 @@ export const buttonStyles = StyleSheet.create({
     width: '100%',
   },
   backButton: {
-    backgroundColor: colors.backgroundDark,
+    backgroundColor: colors.textInverse,
     alignSelf: 'center',
     width: '100%',
     ...shadows.medium,
@@ -220,6 +236,8 @@ export const commonStyles = StyleSheet.create({
     marginVertical: 8,
     width: '100%',
     ...shadows.medium,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   cardElevated: {
     backgroundColor: colors.card,
@@ -228,6 +246,8 @@ export const commonStyles = StyleSheet.create({
     marginVertical: 12,
     width: '100%',
     ...shadows.large,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   cardCompact: {
     backgroundColor: colors.card,
@@ -236,6 +256,8 @@ export const commonStyles = StyleSheet.create({
     marginVertical: 6,
     width: '100%',
     ...shadows.small,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   cardFlyEncore: {
     backgroundColor: colors.card,
@@ -244,6 +266,8 @@ export const commonStyles = StyleSheet.create({
     marginVertical: 16,
     width: '100%',
     ...shadows.flyEncore,
+    borderWidth: 2,
+    borderColor: colors.primary,
   },
   row: {
     flexDirection: 'row',
@@ -273,6 +297,8 @@ export const commonStyles = StyleSheet.create({
     overflow: 'hidden',
     marginVertical: 16,
     ...shadows.medium,
+    borderWidth: 2,
+    borderColor: colors.border,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -283,6 +309,8 @@ export const commonStyles = StyleSheet.create({
     paddingVertical: 16,
     marginVertical: 12,
     ...shadows.medium,
+    borderWidth: 2,
+    borderColor: colors.border,
   },
   searchInput: {
     flex: 1,
@@ -309,7 +337,7 @@ export const commonStyles = StyleSheet.create({
   },
   badgeOutline: {
     backgroundColor: 'transparent',
-    borderWidth: 1.5,
+    borderWidth: 2,
     borderColor: colors.primary,
     borderRadius: 20,
     paddingHorizontal: 12,
@@ -317,7 +345,7 @@ export const commonStyles = StyleSheet.create({
     marginHorizontal: 4,
   },
   badgeText: {
-    color: colors.background,
+    color: colors.textInverse,
     fontSize: 12,
     fontWeight: '600',
     letterSpacing: 0.3,
@@ -352,7 +380,7 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    ...shadows.large,
+    ...shadows.orange,
   },
   divider: {
     height: 1,
@@ -363,25 +391,25 @@ export const commonStyles = StyleSheet.create({
   avatar: {
     borderRadius: 50,
     borderWidth: 3,
-    borderColor: colors.background,
+    borderColor: colors.primary,
     ...shadows.medium,
   },
   avatarLarge: {
     borderRadius: 75,
     borderWidth: 4,
-    borderColor: colors.background,
+    borderColor: colors.primary,
     ...shadows.large,
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.successLight,
+    backgroundColor: colors.primary,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
   },
   ratingText: {
-    color: colors.success,
+    color: colors.textInverse,
     fontSize: 12,
     fontWeight: '700',
     marginLeft: 4,
