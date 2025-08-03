@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, gradients, shadows } from '../styles/commonStyles';
 
