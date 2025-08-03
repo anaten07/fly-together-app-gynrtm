@@ -1,7 +1,9 @@
 
-import React from 'react';
 import { View, Text, Platform } from 'react-native';
-import { commonStyles, colors } from '../styles/commonStyles';
+import { LinearGradient } from 'expo-linear-gradient';
+import { commonStyles, colors, gradients, shadows } from '../styles/commonStyles';
+import Icon from './Icon';
+import React from 'react';
 
 interface Pilot {
   id: string;
@@ -15,43 +17,94 @@ interface MapViewProps {
 }
 
 export default function MapView({ pilots }: MapViewProps) {
-  // Since react-native-maps doesn't support web in Natively, we'll show a placeholder
-  if (Platform.OS === 'web') {
-    return (
-      <View style={[commonStyles.mapContainer, { 
-        backgroundColor: colors.backgroundAlt,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: colors.border,
-      }]}>
-        <Text style={[commonStyles.text, { textAlign: 'center', color: colors.textLight }]}>
-          📍 Map View
-        </Text>
-        <Text style={[commonStyles.textLight, { textAlign: 'center', marginTop: 5 }]}>
-          Maps are not supported on web in Natively.{'\n'}
-          {pilots.length} pilots found in your area.
-        </Text>
-      </View>
-    );
-  }
-
-  // For mobile platforms, we would use react-native-maps here
-  // But since we're keeping it simple for now, we'll use the same placeholder
   return (
-    <View style={[commonStyles.mapContainer, { 
-      backgroundColor: colors.backgroundAlt,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: colors.border,
-    }]}>
-      <Text style={[commonStyles.text, { textAlign: 'center', color: colors.textLight }]}>
-        📍 Map View
-      </Text>
-      <Text style={[commonStyles.textLight, { textAlign: 'center', marginTop: 5 }]}>
-        Interactive map showing {pilots.length} pilots in your area.
-      </Text>
+    <View style={[commonStyles.mapContainer, { position: 'relative', overflow: 'hidden' }]}>
+      <LinearGradient
+        colors={gradients.sky}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[StyleSheet.absoluteFill, { borderRadius: 20 }]}
+      />
+      
+      <View style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}>
+        <View style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          borderRadius: 20,
+          padding: 24,
+          alignItems: 'center',
+          ...shadows.medium,
+        }}>
+          <Icon name="map" size={48} color={colors.primary} />
+          <Text style={[commonStyles.subtitle, { marginTop: 16, marginBottom: 8, textAlign: 'center' }]}>
+            Interactive Map
+          </Text>
+          <Text style={[commonStyles.textLight, { textAlign: 'center', lineHeight: 20 }]}>
+            {Platform.OS === 'web' 
+              ? 'Maps are not supported on web in Natively. Use the mobile app for full map functionality.'
+              : `Showing ${pilots.length} pilots in your area`
+            }
+          </Text>
+          
+          {Platform.OS !== 'web' && (
+            <View style={{ marginTop: 16, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {pilots.slice(0, 3).map((pilot, index) => (
+                <View key={pilot.id} style={{
+                  backgroundColor: colors.primary,
+                  borderRadius: 12,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  margin: 2,
+                }}>
+                  <Text style={[commonStyles.badgeText, { fontSize: 10 }]}>
+                    {pilot.name.split(' ')[0]}
+                  </Text>
+                </View>
+              ))}
+              {pilots.length > 3 && (
+                <View style={{
+                  backgroundColor: colors.textMuted,
+                  borderRadius: 12,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  margin: 2,
+                }}>
+                  <Text style={[commonStyles.badgeText, { fontSize: 10 }]}>
+                    +{pilots.length - 3}
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+      </View>
+      
+      {/* Decorative elements */}
+      <View style={{
+        position: 'absolute',
+        top: 20,
+        right: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 20,
+        padding: 8,
+      }}>
+        <Icon name="location" size={20} color={colors.background} />
+      </View>
+      
+      <View style={{
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 20,
+        padding: 8,
+      }}>
+        <Icon name="airplane" size={20} color={colors.background} />
+      </View>
     </View>
   );
 }

@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, Linking, StatusBar } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { commonStyles, colors, buttonStyles } from '../../styles/commonStyles';
+import { LinearGradient } from 'expo-linear-gradient';
+import { commonStyles, colors, buttonStyles, gradients, shadows } from '../../styles/commonStyles';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 
@@ -109,6 +110,35 @@ const mockPilotDetails = {
       },
     ],
   },
+  '4': {
+    id: '4',
+    name: 'David Thompson',
+    experience: '20 years',
+    aircraft: 'Beechcraft Bonanza',
+    location: 'Palo Alto, CA',
+    rating: 4.9,
+    distance: '12.4 miles',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face',
+    bio: 'Retired airline pilot who loves sharing decades of aviation experience with fellow enthusiasts.',
+    certifications: ['PPL', 'IFR', 'Commercial', 'ATP'],
+    totalFlightHours: 15000,
+    aircraftOwned: ['Beechcraft Bonanza'],
+    preferredFlightTypes: ['Cross Country', 'Training Flights', 'Scenic Tours'],
+    availability: 'Flexible schedule',
+    contactInfo: {
+      phone: '+1 (555) 456-7890',
+      email: 'david.thompson@email.com',
+    },
+    reviews: [
+      {
+        id: '1',
+        reviewer: 'Mark S.',
+        rating: 5,
+        comment: 'Incredible experience with a true aviation professional. Highly recommended!',
+        date: '2024-01-16',
+      },
+    ],
+  },
 };
 
 export default function PilotProfileScreen() {
@@ -118,11 +148,15 @@ export default function PilotProfileScreen() {
   if (!pilot) {
     return (
       <View style={[commonStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-        <Text style={commonStyles.title}>Pilot not found</Text>
+        <Icon name="person-circle-outline" size={80} color={colors.textMuted} />
+        <Text style={[commonStyles.title, { color: colors.textMuted, marginTop: 20 }]}>
+          Pilot not found
+        </Text>
         <Button
           text="Go Back"
           onPress={() => router.back()}
-          style={buttonStyles.backButton}
+          variant="outline"
+          style={{ marginTop: 20, width: 200 }}
         />
       </View>
     );
@@ -143,103 +177,202 @@ export default function PilotProfileScreen() {
     alert('Booking feature coming soon!');
   };
 
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Icon
+          key={i}
+          name={i <= rating ? "star" : "star-outline"}
+          size={16}
+          color={colors.accent}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
     <View style={commonStyles.container}>
-      {/* Header with back button */}
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 20,
-        paddingBottom: 10,
-      }}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={{
-            padding: 8,
-            borderRadius: 20,
-            backgroundColor: colors.backgroundAlt,
-            marginRight: 15,
-          }}
-        >
-          <Icon name="chevron-back" size={24} />
-        </TouchableOpacity>
-        <Text style={[commonStyles.subtitle, { flex: 1 }]}>Pilot Profile</Text>
-      </View>
-
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        {/* Profile Header */}
-        <View style={{ padding: 20, alignItems: 'center' }}>
-          <Image
-            source={{ uri: pilot.avatar }}
+      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
+      
+      {/* Header with gradient background */}
+      <LinearGradient
+        colors={gradients.primary}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{
+          paddingTop: 50,
+          paddingBottom: 30,
+          paddingHorizontal: 20,
+        }}
+      >
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}>
+          <TouchableOpacity
+            onPress={() => router.back()}
             style={{
-              width: 120,
-              height: 120,
-              borderRadius: 60,
-              marginBottom: 15,
+              padding: 12,
+              borderRadius: 25,
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              marginRight: 15,
             }}
-          />
-          <Text style={commonStyles.title}>{pilot.name}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <Icon name="star" size={18} />
-            <Text style={[commonStyles.text, { marginLeft: 5 }]}>
-              {pilot.rating} ({pilot.reviews.length} reviews)
+          >
+            <Icon name="chevron-back" size={24} color={colors.background} />
+          </TouchableOpacity>
+          <Text style={[commonStyles.subtitle, { flex: 1, color: colors.background }]}>
+            Pilot Profile
+          </Text>
+          <TouchableOpacity
+            style={{
+              padding: 12,
+              borderRadius: 25,
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            }}
+          >
+            <Icon name="heart-outline" size={24} color={colors.background} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Profile Header */}
+        <View style={{ alignItems: 'center' }}>
+          <View style={{ position: 'relative' }}>
+            <Image
+              source={{ uri: pilot.avatar }}
+              style={[
+                {
+                  width: 140,
+                  height: 140,
+                  borderRadius: 70,
+                  marginBottom: 16,
+                },
+                commonStyles.avatarLarge
+              ]}
+            />
+            {/* Verified badge */}
+            <View style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 10,
+              backgroundColor: colors.success,
+              borderRadius: 15,
+              padding: 6,
+              borderWidth: 3,
+              borderColor: colors.background,
+            }}>
+              <Icon name="checkmark" size={16} color={colors.background} />
+            </View>
+          </View>
+          
+          <Text style={[commonStyles.title, { color: colors.background, marginBottom: 8 }]}>
+            {pilot.name}
+          </Text>
+          
+          <View style={commonStyles.ratingContainer}>
+            <Icon name="star" size={18} color={colors.success} />
+            <Text style={[commonStyles.ratingText, { fontSize: 16 }]}>
+              {pilot.rating}
+            </Text>
+            <Text style={[commonStyles.textLight, { color: colors.background, opacity: 0.8, marginLeft: 8 }]}>
+              ({pilot.reviews.length} reviews)
             </Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-            <Icon name="location" size={18} />
-            <Text style={[commonStyles.textLight, { marginLeft: 5 }]}>
+          
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+            <Icon name="location" size={18} color={colors.background} />
+            <Text style={[commonStyles.text, { color: colors.background, marginLeft: 6, opacity: 0.9 }]}>
               {pilot.distance} • {pilot.location}
             </Text>
           </View>
         </View>
+      </LinearGradient>
 
-        {/* Bio */}
+      <ScrollView style={{ flex: 1, marginTop: -20 }} showsVerticalScrollIndicator={false}>
+        {/* Bio Card */}
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-          <Text style={commonStyles.subtitle}>About</Text>
-          <Text style={[commonStyles.text, { lineHeight: 22 }]}>{pilot.bio}</Text>
+          <View style={[commonStyles.cardElevated, { marginTop: 20 }]}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 12 }]}>About</Text>
+            <Text style={[commonStyles.text, { lineHeight: 24 }]}>{pilot.bio}</Text>
+          </View>
         </View>
 
-        {/* Flight Details */}
+        {/* Quick Stats */}
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-          <View style={commonStyles.card}>
-            <Text style={[commonStyles.subtitle, { marginBottom: 15 }]}>Flight Details</Text>
+          <View style={commonStyles.cardElevated}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 16 }]}>Quick Stats</Text>
             
-            <View style={[commonStyles.row, { marginBottom: 10 }]}>
-              <Text style={commonStyles.textLight}>Experience:</Text>
-              <Text style={commonStyles.text}>{pilot.experience}</Text>
-            </View>
-            
-            <View style={[commonStyles.row, { marginBottom: 10 }]}>
-              <Text style={commonStyles.textLight}>Total Flight Hours:</Text>
-              <Text style={commonStyles.text}>{pilot.totalFlightHours.toLocaleString()}</Text>
-            </View>
-            
-            <View style={[commonStyles.row, { marginBottom: 10 }]}>
-              <Text style={commonStyles.textLight}>Availability:</Text>
-              <Text style={commonStyles.text}>{pilot.availability}</Text>
-            </View>
-            
-            <View style={{ marginTop: 10 }}>
-              <Text style={[commonStyles.textLight, { marginBottom: 8 }]}>Certifications:</Text>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                {pilot.certifications.map((cert, index) => (
-                  <View key={index} style={[commonStyles.badge, { marginRight: 5, marginBottom: 5 }]}>
-                    <Text style={commonStyles.badgeText}>{cert}</Text>
-                  </View>
-                ))}
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Icon name="time" size={24} color={colors.primary} backgroundColor={colors.surfaceAlt} padding={8} />
+                <Text style={[commonStyles.subtitleMedium, { marginTop: 8, marginBottom: 4 }]}>
+                  {pilot.experience}
+                </Text>
+                <Text style={commonStyles.textMuted}>Experience</Text>
               </View>
+              
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Icon name="airplane" size={24} color={colors.secondary} backgroundColor={colors.surfaceAlt} padding={8} />
+                <Text style={[commonStyles.subtitleMedium, { marginTop: 8, marginBottom: 4 }]}>
+                  {pilot.totalFlightHours.toLocaleString()}
+                </Text>
+                <Text style={commonStyles.textMuted}>Flight Hours</Text>
+              </View>
+              
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Icon name="calendar" size={24} color={colors.accent} backgroundColor={colors.surfaceAlt} padding={8} />
+                <Text style={[commonStyles.subtitleMedium, { marginTop: 8, marginBottom: 4 }]}>
+                  Available
+                </Text>
+                <Text style={commonStyles.textMuted}>{pilot.availability}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Certifications */}
+        <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+          <View style={commonStyles.cardElevated}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 16 }]}>Certifications</Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              {pilot.certifications.map((cert, index) => (
+                <View key={index} style={[
+                  commonStyles.badge, 
+                  { 
+                    marginRight: 8, 
+                    marginBottom: 8,
+                    backgroundColor: index % 3 === 0 ? colors.primary : 
+                                   index % 3 === 1 ? colors.secondary : colors.accent,
+                  }
+                ]}>
+                  <Text style={commonStyles.badgeText}>{cert}</Text>
+                </View>
+              ))}
             </View>
           </View>
         </View>
 
         {/* Aircraft */}
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-          <View style={commonStyles.card}>
-            <Text style={[commonStyles.subtitle, { marginBottom: 15 }]}>Aircraft</Text>
+          <View style={commonStyles.cardElevated}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 16 }]}>Aircraft Fleet</Text>
             {pilot.aircraftOwned.map((aircraft, index) => (
-              <View key={index} style={[commonStyles.row, { marginBottom: 8 }]}>
-                <Icon name="airplane" size={18} />
-                <Text style={[commonStyles.text, { marginLeft: 10 }]}>{aircraft}</Text>
+              <View key={index} style={[
+                { 
+                  flexDirection: 'row', 
+                  alignItems: 'center', 
+                  paddingVertical: 12,
+                  paddingHorizontal: 16,
+                  backgroundColor: colors.surfaceAlt,
+                  borderRadius: 12,
+                  marginBottom: 8,
+                }
+              ]}>
+                <Icon name="airplane" size={20} color={colors.primary} />
+                <Text style={[commonStyles.textMedium, { marginLeft: 12, flex: 1 }]}>{aircraft}</Text>
+                <Icon name="chevron-forward" size={16} color={colors.textMuted} />
               </View>
             ))}
           </View>
@@ -247,16 +380,19 @@ export default function PilotProfileScreen() {
 
         {/* Preferred Flight Types */}
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-          <View style={commonStyles.card}>
-            <Text style={[commonStyles.subtitle, { marginBottom: 15 }]}>Preferred Flight Types</Text>
+          <View style={commonStyles.cardElevated}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 16 }]}>Specialties</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {pilot.preferredFlightTypes.map((type, index) => (
-                <View key={index} style={[commonStyles.badge, { 
-                  backgroundColor: colors.backgroundAlt,
-                  marginRight: 5,
-                  marginBottom: 5,
-                }]}>
-                  <Text style={[commonStyles.badgeText, { color: colors.text }]}>{type}</Text>
+                <View key={index} style={[
+                  commonStyles.badgeOutline, 
+                  { 
+                    marginRight: 8,
+                    marginBottom: 8,
+                    borderColor: colors.primary,
+                  }
+                ]}>
+                  <Text style={[commonStyles.badgeTextDark, { color: colors.primary }]}>{type}</Text>
                 </View>
               ))}
             </View>
@@ -265,39 +401,55 @@ export default function PilotProfileScreen() {
 
         {/* Reviews */}
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-          <Text style={[commonStyles.subtitle, { marginBottom: 15 }]}>Reviews</Text>
-          {pilot.reviews.map((review) => (
-            <View key={review.id} style={[commonStyles.card, { marginBottom: 10 }]}>
-              <View style={[commonStyles.row, { marginBottom: 8 }]}>
-                <Text style={[commonStyles.text, { fontWeight: '600' }]}>{review.reviewer}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon name="star" size={16} />
-                  <Text style={[commonStyles.textLight, { marginLeft: 4 }]}>{review.rating}</Text>
+          <View style={commonStyles.cardElevated}>
+            <Text style={[commonStyles.subtitle, { marginBottom: 16 }]}>
+              Reviews ({pilot.reviews.length})
+            </Text>
+            {pilot.reviews.map((review) => (
+              <View key={review.id} style={[
+                {
+                  backgroundColor: colors.surfaceAlt,
+                  borderRadius: 16,
+                  padding: 16,
+                  marginBottom: 12,
+                }
+              ]}>
+                <View style={[commonStyles.row, { marginBottom: 8 }]}>
+                  <Text style={[commonStyles.textMedium, { fontWeight: '600' }]}>{review.reviewer}</Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {renderStars(review.rating)}
+                  </View>
                 </View>
+                <Text style={[commonStyles.text, { marginBottom: 8, lineHeight: 22 }]}>{review.comment}</Text>
+                <Text style={commonStyles.textMuted}>{review.date}</Text>
               </View>
-              <Text style={[commonStyles.text, { marginBottom: 8 }]}>{review.comment}</Text>
-              <Text style={commonStyles.textLight}>{review.date}</Text>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
 
         {/* Contact Buttons */}
-        <View style={{ paddingHorizontal: 20, paddingBottom: 30 }}>
+        <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
           <Button
-            text="Book a Flight"
+            text="Book a Flight ✈️"
             onPress={handleBookFlight}
-            style={[buttonStyles.primary, { marginBottom: 10 }]}
+            variant="gradient"
+            size="large"
+            style={{ marginBottom: 12 }}
           />
-          <View style={{ flexDirection: 'row', gap: 10 }}>
+          <View style={{ flexDirection: 'row', gap: 12 }}>
             <Button
               text="Call"
               onPress={() => handleContact('phone')}
-              style={[buttonStyles.secondary, { flex: 1 }]}
+              variant="secondary"
+              style={{ flex: 1 }}
+              icon={<Icon name="call" size={18} color={colors.background} />}
             />
             <Button
               text="Email"
               onPress={() => handleContact('email')}
-              style={[buttonStyles.secondary, { flex: 1 }]}
+              variant="outline"
+              style={{ flex: 1 }}
+              icon={<Icon name="mail" size={18} color={colors.primary} />}
             />
           </View>
         </View>
