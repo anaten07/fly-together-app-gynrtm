@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text, Platform, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from './Icon';
 import { commonStyles, colors, gradients, shadows } from '../styles/commonStyles';
