@@ -1,9 +1,8 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Icon from './Icon';
-import { commonStyles, colors, shadows, gradients } from '../styles/commonStyles';
+import { commonStyles, colors, shadows } from '../styles/commonStyles';
 
 interface Pilot {
   id: string;
@@ -31,20 +30,20 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <Icon key={i} name="star" size={14} color={colors.primary} />
+        <Icon key={i} name="star" size={12} color={colors.primary} />
       );
     }
 
     if (hasHalfStar) {
       stars.push(
-        <Icon key="half" name="star-half" size={14} color={colors.primary} />
+        <Icon key="half" name="star-half" size={12} color={colors.primary} />
       );
     }
 
     const remainingStars = 5 - Math.ceil(rating);
     for (let i = 0; i < remainingStars; i++) {
       stars.push(
-        <Icon key={`empty-${i}`} name="star-outline" size={14} color={colors.textMuted} />
+        <Icon key={`empty-${i}`} name="star-outline" size={12} color={colors.textMuted} />
       );
     }
 
@@ -54,49 +53,31 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
   return (
     <TouchableOpacity
       style={[
-        commonStyles.cardElevated,
+        commonStyles.card,
         {
-          marginVertical: 12,
-          borderRadius: 28,
-          overflow: 'hidden',
+          marginVertical: 8,
           backgroundColor: colors.background,
-          borderWidth: 2,
           borderColor: colors.border,
-          ...shadows.large,
+          ...shadows.medium,
         }
       ]}
       onPress={onPress}
-      activeOpacity={0.95}
+      activeOpacity={0.9}
     >
-      {/* Subtle orange accent gradient */}
-      <LinearGradient
-        colors={['rgba(255, 107, 53, 0.03)', 'rgba(255, 107, 53, 0.01)']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-        }}
-      />
-
       <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-        {/* Enhanced Avatar */}
+        {/* Avatar */}
         <View style={{
-          borderRadius: 40,
-          borderWidth: 3,
+          borderRadius: 30,
+          borderWidth: 2,
           borderColor: colors.primary,
-          ...shadows.orange,
-          marginRight: 18,
+          marginRight: 16,
         }}>
           <Image
             source={{ uri: pilot.avatar }}
             style={{
-              width: 72,
-              height: 72,
-              borderRadius: 36,
+              width: 60,
+              height: 60,
+              borderRadius: 28,
             }}
           />
         </View>
@@ -108,11 +89,11 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
             flexDirection: 'row', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            marginBottom: 10 
+            marginBottom: 8 
           }}>
             <Text style={[commonStyles.subtitleMedium, { 
-              fontSize: 20, 
-              fontWeight: '800',
+              fontSize: 18, 
+              fontWeight: '700',
               color: colors.text,
               flex: 1,
               marginRight: 12,
@@ -124,17 +105,16 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
               flexDirection: 'row',
               alignItems: 'center',
               backgroundColor: colors.primary,
-              paddingHorizontal: 12,
-              paddingVertical: 6,
-              borderRadius: 16,
-              ...shadows.small,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 12,
             }}>
               {renderStars(pilot.rating)}
               <Text style={[commonStyles.textMuted, { 
-                marginLeft: 8, 
-                fontWeight: '800',
+                marginLeft: 6, 
+                fontWeight: '600',
                 color: colors.textInverse,
-                fontSize: 14,
+                fontSize: 12,
               }]}>
                 {pilot.rating}
               </Text>
@@ -142,78 +122,57 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
           </View>
 
           {/* Experience and Aircraft */}
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-            <View style={{
-              backgroundColor: colors.secondary,
-              borderRadius: 12,
-              padding: 6,
-              marginRight: 8,
-            }}>
-              <Icon name="time" size={16} color={colors.textInverse} />
-            </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <Icon name="time" size={14} color={colors.textLight} />
             <Text style={[commonStyles.textLight, { 
-              fontWeight: '700',
-              color: colors.text,
-              fontSize: 15,
+              marginLeft: 6,
+              fontWeight: '600',
+              color: colors.textLight,
+              fontSize: 14,
             }]}>
               {pilot.experience}
             </Text>
             
             <View style={{ 
-              width: 6, 
-              height: 6, 
-              borderRadius: 3, 
-              backgroundColor: colors.primary, 
-              marginHorizontal: 16 
+              width: 4, 
+              height: 4, 
+              borderRadius: 2, 
+              backgroundColor: colors.textMuted, 
+              marginHorizontal: 12 
             }} />
             
-            <View style={{
-              backgroundColor: colors.primary,
-              borderRadius: 12,
-              padding: 6,
-              marginRight: 8,
-            }}>
-              <Icon name="airplane" size={16} color={colors.textInverse} />
-            </View>
+            <Icon name="airplane" size={14} color={colors.textLight} />
             <Text style={[commonStyles.textLight, { 
-              fontWeight: '700',
-              color: colors.text,
-              fontSize: 15,
+              marginLeft: 6,
+              fontWeight: '600',
+              color: colors.textLight,
+              fontSize: 14,
             }]}>
               {pilot.aircraft}
             </Text>
           </View>
 
           {/* Location and Distance */}
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}>
-            <View style={{
-              backgroundColor: colors.backgroundAlt,
-              borderRadius: 12,
-              padding: 6,
-              marginRight: 8,
-              borderWidth: 1,
-              borderColor: colors.border,
-            }}>
-              <Icon name="location" size={16} color={colors.text} />
-            </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+            <Icon name="location" size={14} color={colors.textLight} />
             <Text style={[commonStyles.textLight, { 
               flex: 1,
-              fontWeight: '600',
+              marginLeft: 6,
+              fontWeight: '500',
               color: colors.textLight,
-              fontSize: 15,
+              fontSize: 14,
             }]}>
               {pilot.location}
             </Text>
             <View style={{
               backgroundColor: colors.secondary,
-              paddingHorizontal: 12,
-              paddingVertical: 6,
-              borderRadius: 16,
-              ...shadows.small,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 12,
             }}>
               <Text style={[commonStyles.badgeText, { 
-                fontSize: 12, 
-                fontWeight: '800',
+                fontSize: 11, 
+                fontWeight: '600',
                 color: colors.textInverse,
               }]}>
                 {pilot.distance}
@@ -222,20 +181,20 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
           </View>
 
           {/* Certifications */}
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
             {pilot.certifications.slice(0, 3).map((cert, index) => (
               <View key={index} style={{
                 backgroundColor: colors.backgroundAlt,
-                paddingHorizontal: 10,
-                paddingVertical: 6,
-                borderRadius: 12,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+                borderRadius: 10,
                 borderWidth: 1,
                 borderColor: colors.border,
               }}>
                 <Text style={[commonStyles.badgeText, { 
                   color: colors.text, 
-                  fontSize: 11,
-                  fontWeight: '700',
+                  fontSize: 10,
+                  fontWeight: '600',
                 }]}>
                   {cert}
                 </Text>
@@ -244,14 +203,13 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
             {pilot.certifications.length > 3 && (
               <View style={{
                 backgroundColor: colors.primary,
-                paddingHorizontal: 10,
-                paddingVertical: 6,
-                borderRadius: 12,
-                ...shadows.small,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+                borderRadius: 10,
               }}>
                 <Text style={[commonStyles.badgeText, { 
-                  fontSize: 11,
-                  fontWeight: '700',
+                  fontSize: 10,
+                  fontWeight: '600',
                   color: colors.textInverse,
                 }]}>
                   +{pilot.certifications.length - 3}
@@ -262,30 +220,28 @@ export default function PilotCard({ pilot, onPress }: PilotCardProps) {
 
           {/* Bio Preview */}
           <Text style={[commonStyles.textLight, { 
-            lineHeight: 22,
-            fontSize: 15,
+            lineHeight: 20,
+            fontSize: 14,
             color: colors.textLight,
-            fontWeight: '500',
           }]} numberOfLines={2}>
             {pilot.bio}
           </Text>
         </View>
       </View>
 
-      {/* Enhanced Action Indicator */}
+      {/* Action Indicator */}
       <View style={{
         position: 'absolute',
-        top: 24,
-        right: 24,
+        top: 16,
+        right: 16,
         backgroundColor: colors.primary,
-        borderRadius: 18,
-        width: 36,
-        height: 36,
+        borderRadius: 15,
+        width: 30,
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        ...shadows.orange,
       }}>
-        <Icon name="chevron-forward" size={18} color={colors.textInverse} />
+        <Icon name="chevron-forward" size={16} color={colors.textInverse} />
       </View>
     </TouchableOpacity>
   );

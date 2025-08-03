@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TextInput, TouchableOpacity, StatusBar } from '
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { commonStyles, colors, gradients, shadows } from '../styles/commonStyles';
+import { commonStyles, colors, shadows } from '../styles/commonStyles';
 import Icon from '../components/Icon';
 import PilotCard from '../components/PilotCard';
 import MapView from '../components/MapView';
@@ -102,40 +102,29 @@ export default function HomeScreen() {
       <StatusBar barStyle="light-content" backgroundColor={colors.secondary} />
       
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        {/* Sleek Black & Orange Header */}
+        {/* Header */}
         <LinearGradient
-          colors={['#000000', '#1A1A1A', '#FF6B35']}
+          colors={[colors.secondary, colors.primary]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[commonStyles.headerGradient, { paddingTop: 70, paddingBottom: 50 }]}
+          style={[commonStyles.headerGradient, { paddingTop: 60, paddingBottom: 40 }]}
         >
           <View style={{ alignItems: 'center' }}>
-            {/* Logo and Brand */}
             <View style={{ 
               flexDirection: 'row', 
               alignItems: 'center', 
               marginBottom: 16,
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              paddingHorizontal: 24,
-              paddingVertical: 12,
-              borderRadius: 30,
-              borderWidth: 1,
-              borderColor: 'rgba(255, 107, 53, 0.3)',
             }}>
               <Icon 
                 name="airplane" 
-                size={28} 
+                size={32} 
                 color={colors.textInverse} 
                 style={{ marginRight: 12, transform: [{ rotate: '45deg' }] }} 
               />
               <Text style={[commonStyles.titleLarge, { 
                 color: colors.textInverse, 
-                fontSize: 38, 
-                fontWeight: '900',
-                letterSpacing: -1.5,
-                textShadowColor: 'rgba(255, 107, 53, 0.5)',
-                textShadowOffset: { width: 0, height: 2 },
-                textShadowRadius: 8,
+                fontSize: 32, 
+                fontWeight: '800',
               }]}>
                 Fly Encore
               </Text>
@@ -143,32 +132,26 @@ export default function HomeScreen() {
             
             <Text style={[commonStyles.text, { 
               color: colors.textInverse, 
-              opacity: 0.95, 
               textAlign: 'center',
-              fontSize: 18,
-              fontWeight: '500',
-              letterSpacing: 0.5,
+              fontSize: 16,
               marginBottom: 20,
             }]}>
               Connect with certified pilots for extraordinary flights
             </Text>
             
-            {/* Location Badge */}
             <View style={{ 
               flexDirection: 'row', 
               alignItems: 'center',
-              backgroundColor: colors.primary,
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              borderRadius: 25,
-              ...shadows.orange,
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              borderRadius: 20,
             }}>
-              <Icon name="location" size={18} color={colors.textInverse} />
+              <Icon name="location" size={16} color={colors.textInverse} />
               <Text style={[commonStyles.textMedium, { 
                 color: colors.textInverse, 
                 marginLeft: 8,
-                fontWeight: '700',
-                fontSize: 16,
+                fontSize: 14,
               }]}>
                 San Francisco Bay Area
               </Text>
@@ -176,17 +159,16 @@ export default function HomeScreen() {
           </View>
         </LinearGradient>
 
-        {/* Elevated Search Bar */}
-        <View style={{ paddingHorizontal: 20, marginTop: -30, zIndex: 1 }}>
+        {/* Search Bar */}
+        <View style={{ paddingHorizontal: 20, marginTop: -25, zIndex: 1 }}>
           <View style={[commonStyles.searchContainer, { 
-            ...shadows.large,
             backgroundColor: colors.background,
-            borderWidth: 2,
             borderColor: colors.primary,
+            ...shadows.medium,
           }]}>
-            <Icon name="search" size={24} color={colors.primary} />
+            <Icon name="search" size={20} color={colors.primary} />
             <TextInput
-              style={[commonStyles.searchInput, { fontSize: 17, fontWeight: '500' }]}
+              style={[commonStyles.searchInput, { fontSize: 16 }]}
               placeholder="Search pilots, aircraft, or location..."
               placeholderTextColor={colors.textMuted}
               value={searchQuery}
@@ -194,120 +176,65 @@ export default function HomeScreen() {
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => handleSearch('')}>
-                <Icon name="close-circle" size={24} color={colors.textMuted} />
+                <Icon name="close-circle" size={20} color={colors.textMuted} />
               </TouchableOpacity>
             )}
           </View>
         </View>
 
-        {/* Modern Stats Cards */}
-        <View style={{ paddingHorizontal: 20, marginVertical: 30 }}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={{ flexDirection: 'row', gap: 16 }}>
-              {/* Active Pilots Card */}
-              <View style={[commonStyles.cardCompact, { 
-                minWidth: 150, 
-                alignItems: 'center',
-                backgroundColor: colors.secondary,
-                borderColor: colors.primary,
-                borderWidth: 2,
-                ...shadows.orange,
+        {/* Stats */}
+        <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={[commonStyles.cardCompact, { 
+              flex: 1, 
+              marginRight: 8,
+              alignItems: 'center',
+              backgroundColor: colors.background,
+              borderColor: colors.border,
+            }]}>
+              <Icon name="people" size={24} color={colors.primary} />
+              <Text style={[commonStyles.subtitleMedium, { 
+                marginTop: 8,
+                marginBottom: 4, 
+                color: colors.text,
+                fontSize: 20,
+                fontWeight: '700',
               }]}>
-                <View style={{
-                  backgroundColor: colors.primary,
-                  borderRadius: 20,
-                  padding: 12,
-                  marginBottom: 12,
-                }}>
-                  <Icon name="people" size={28} color={colors.textInverse} />
-                </View>
-                <Text style={[commonStyles.subtitleMedium, { 
-                  marginBottom: 4, 
-                  color: colors.textInverse,
-                  fontSize: 28,
-                  fontWeight: '900',
-                }]}>
-                  {mockPilots.length}
-                </Text>
-                <Text style={[commonStyles.textMuted, { 
-                  color: colors.primary, 
-                  fontWeight: '700',
-                  fontSize: 14,
-                }]}>
-                  Active Pilots
-                </Text>
-              </View>
-              
-              {/* Aircraft Types Card */}
-              <View style={[commonStyles.cardCompact, { 
-                minWidth: 150, 
-                alignItems: 'center',
-                backgroundColor: colors.background,
-                borderColor: colors.secondary,
-                borderWidth: 2,
-                ...shadows.medium,
+                {mockPilots.length}
+              </Text>
+              <Text style={[commonStyles.textMuted, { 
+                color: colors.textLight, 
+                fontSize: 12,
               }]}>
-                <View style={{
-                  backgroundColor: colors.secondary,
-                  borderRadius: 20,
-                  padding: 12,
-                  marginBottom: 12,
-                }}>
-                  <Icon name="airplane" size={28} color={colors.textInverse} />
-                </View>
-                <Text style={[commonStyles.subtitleMedium, { 
-                  marginBottom: 4, 
-                  color: colors.text,
-                  fontSize: 28,
-                  fontWeight: '900',
-                }]}>
-                  12
-                </Text>
-                <Text style={[commonStyles.textMuted, { 
-                  color: colors.textLight, 
-                  fontWeight: '700',
-                  fontSize: 14,
-                }]}>
-                  Aircraft Types
-                </Text>
-              </View>
-              
-              {/* Average Rating Card */}
-              <View style={[commonStyles.cardCompact, { 
-                minWidth: 150, 
-                alignItems: 'center',
-                backgroundColor: colors.primary,
-                borderColor: colors.secondary,
-                borderWidth: 2,
-                ...shadows.orange,
-              }]}>
-                <View style={{
-                  backgroundColor: colors.textInverse,
-                  borderRadius: 20,
-                  padding: 12,
-                  marginBottom: 12,
-                }}>
-                  <Icon name="star" size={28} color={colors.primary} />
-                </View>
-                <Text style={[commonStyles.subtitleMedium, { 
-                  marginBottom: 4, 
-                  color: colors.textInverse,
-                  fontSize: 28,
-                  fontWeight: '900',
-                }]}>
-                  4.8
-                </Text>
-                <Text style={[commonStyles.textMuted, { 
-                  color: colors.textInverse, 
-                  fontWeight: '700',
-                  fontSize: 14,
-                  opacity: 0.9,
-                }]}>
-                  Avg Rating
-                </Text>
-              </View>
+                Active Pilots
+              </Text>
             </View>
-          </ScrollView>
+            
+            <View style={[commonStyles.cardCompact, { 
+              flex: 1, 
+              marginLeft: 8,
+              alignItems: 'center',
+              backgroundColor: colors.background,
+              borderColor: colors.border,
+            }]}>
+              <Icon name="star" size={24} color={colors.primary} />
+              <Text style={[commonStyles.subtitleMedium, { 
+                marginTop: 8,
+                marginBottom: 4, 
+                color: colors.text,
+                fontSize: 20,
+                fontWeight: '700',
+              }]}>
+                4.8
+              </Text>
+              <Text style={[commonStyles.textMuted, { 
+                color: colors.textLight, 
+                fontSize: 12,
+              }]}>
+                Avg Rating
+              </Text>
+            </View>
+          </View>
         </View>
 
         {/* Map View */}
@@ -315,12 +242,12 @@ export default function HomeScreen() {
           <MapView pilots={mockPilots} />
         </View>
 
-        {/* Sleek Filter Buttons */}
-        <View style={{ paddingHorizontal: 20, marginVertical: 30 }}>
-          <Text style={[commonStyles.subtitleMedium, { 
-            marginBottom: 20, 
-            fontSize: 22, 
-            fontWeight: '800',
+        {/* Filter Buttons */}
+        <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
+          <Text style={[commonStyles.subtitle, { 
+            marginBottom: 16, 
+            fontSize: 18, 
+            fontWeight: '700',
             color: colors.text,
           }]}>
             Categories
@@ -332,13 +259,13 @@ export default function HomeScreen() {
                   key={category.id}
                   style={[
                     {
-                      backgroundColor: activeFilter === category.id ? colors.secondary : colors.background,
+                      backgroundColor: activeFilter === category.id ? colors.primary : colors.background,
                       flexDirection: 'row',
                       alignItems: 'center',
-                      paddingHorizontal: 24,
-                      paddingVertical: 14,
-                      borderRadius: 30,
-                      borderWidth: 2,
+                      paddingHorizontal: 16,
+                      paddingVertical: 10,
+                      borderRadius: 20,
+                      borderWidth: 1,
                       borderColor: activeFilter === category.id ? colors.primary : colors.border,
                       ...shadows.small,
                     }
@@ -347,15 +274,15 @@ export default function HomeScreen() {
                 >
                   <Icon 
                     name={category.icon as any} 
-                    size={20} 
+                    size={16} 
                     color={activeFilter === category.id ? colors.textInverse : colors.text} 
                   />
                   <Text style={[
                     {
                       color: activeFilter === category.id ? colors.textInverse : colors.text,
-                      marginLeft: 10,
-                      fontSize: 16,
-                      fontWeight: '700',
+                      marginLeft: 8,
+                      fontSize: 14,
+                      fontWeight: '600',
                     }
                   ]}>
                     {category.name}
@@ -366,12 +293,12 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
 
-        {/* Enhanced Pilots List */}
+        {/* Pilots List */}
         <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 25 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
             <Text style={[commonStyles.subtitle, { 
-              fontSize: 24, 
-              fontWeight: '800',
+              fontSize: 18, 
+              fontWeight: '700',
               color: colors.text,
             }]}>
               Available Pilots ({filteredPilots.length})
@@ -380,21 +307,20 @@ export default function HomeScreen() {
               flexDirection: 'row', 
               alignItems: 'center',
               backgroundColor: colors.surfaceAlt,
-              paddingHorizontal: 16,
-              paddingVertical: 10,
-              borderRadius: 25,
+              paddingHorizontal: 12,
+              paddingVertical: 6,
+              borderRadius: 16,
               borderWidth: 1,
               borderColor: colors.border,
-              ...shadows.small,
             }}>
               <Text style={[commonStyles.textLight, { 
-                marginRight: 8, 
-                fontWeight: '700',
+                marginRight: 6, 
+                fontSize: 12,
                 color: colors.text,
               }]}>
-                Sort by
+                Sort
               </Text>
-              <Icon name="funnel-outline" size={18} color={colors.text} />
+              <Icon name="funnel-outline" size={14} color={colors.text} />
             </TouchableOpacity>
           </View>
           
@@ -407,28 +333,26 @@ export default function HomeScreen() {
           ))}
           
           {filteredPilots.length === 0 && (
-            <View style={[commonStyles.cardElevated, { 
+            <View style={[commonStyles.card, { 
               alignItems: 'center', 
-              paddingVertical: 60,
+              paddingVertical: 40,
               backgroundColor: colors.backgroundAlt,
               borderColor: colors.border,
             }]}>
-              <Icon name="search" size={72} color={colors.textMuted} />
+              <Icon name="search" size={48} color={colors.textMuted} />
               <Text style={[commonStyles.subtitle, { 
-                marginTop: 24, 
+                marginTop: 16, 
                 color: colors.textMuted, 
-                fontSize: 22,
-                fontWeight: '700',
+                fontSize: 18,
               }]}>
                 No pilots found
               </Text>
               <Text style={[commonStyles.textLight, { 
                 textAlign: 'center', 
-                marginTop: 12, 
-                fontSize: 16,
+                marginTop: 8, 
                 color: colors.textLight,
               }]}>
-                Try adjusting your search criteria or filters
+                Try adjusting your search criteria
               </Text>
             </View>
           )}
