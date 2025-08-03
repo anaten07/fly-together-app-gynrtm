@@ -384,7 +384,7 @@ export default function PilotProfileScreen() {
                 icon={<Icon name="mail" size={18} color={colors.primary} />}
               />
             </View>
-          </div>
+          </View>
         </View>
       </ScrollView>
     </View>
