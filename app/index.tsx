@@ -19,7 +19,7 @@ const mockPilots = [
     rating: 4.9,
     distance: '2.3 miles',
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-    bio: 'Commercial pilot with extensive experience in recreational flying. Love sharing the joy of aviation!',
+    bio: 'Commercial pilot with extensive experience in recreational flying. Love sharing the joy of aviation with fellow enthusiasts!',
     certifications: ['PPL', 'IFR', 'Commercial'],
   },
   {
@@ -31,7 +31,7 @@ const mockPilots = [
     rating: 4.7,
     distance: '5.1 miles',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    bio: 'Weekend warrior pilot who enjoys scenic flights and teaching others about aviation.',
+    bio: 'Weekend warrior pilot who enjoys scenic flights and teaching others about aviation safety and techniques.',
     certifications: ['PPL', 'IFR'],
   },
   {
@@ -43,7 +43,7 @@ const mockPilots = [
     rating: 4.8,
     distance: '8.7 miles',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    bio: 'Aerobatic pilot and flight instructor. Always excited to share advanced flying techniques.',
+    bio: 'Aerobatic pilot and flight instructor. Always excited to share advanced flying techniques and aerobatic maneuvers.',
     certifications: ['PPL', 'IFR', 'CFI', 'Aerobatic'],
   },
   {
@@ -55,7 +55,7 @@ const mockPilots = [
     rating: 4.9,
     distance: '12.4 miles',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    bio: 'Retired airline pilot who loves sharing decades of aviation experience with fellow enthusiasts.',
+    bio: 'Retired airline pilot who loves sharing decades of aviation experience with fellow enthusiasts and new pilots.',
     certifications: ['PPL', 'IFR', 'Commercial', 'ATP'],
   },
 ];
@@ -294,10 +294,10 @@ export default function HomeScreen() {
         </View>
 
         {/* Pilots List */}
-        <View style={{ paddingHorizontal: 20, paddingBottom: 40 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+        <View style={{ paddingHorizontal: 20, paddingBottom: 60 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
             <Text style={[commonStyles.subtitle, { 
-              fontSize: 18, 
+              fontSize: 20, 
               fontWeight: '700',
               color: colors.text,
             }]}>
