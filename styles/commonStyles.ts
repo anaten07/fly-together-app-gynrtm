@@ -2,8 +2,8 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const colors = {
-  primary: '#6366F1',        // Modern indigo
-  primaryLight: '#8B5CF6',   // Purple accent
+  primary: '#5441cc',        // Modern indigo - Fly Encore brand color
+  primaryLight: '#6366F1',   // Lighter indigo
   primaryDark: '#4F46E5',    // Darker indigo
   secondary: '#06B6D4',      // Cyan
   secondaryLight: '#67E8F9', // Light cyan
@@ -40,6 +40,7 @@ export const gradients = {
   sunset: ['#FF6B6B', '#FFE66D'],
   ocean: ['#667eea', '#764ba2'],
   sky: ['#74b9ff', '#0984e3'],
+  flyEncore: ['#667eea', '#764ba2', '#5441cc'], // Fly Encore brand gradient
 };
 
 export const shadows = {
@@ -70,6 +71,13 @@ export const shadows = {
     shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 6,
+  },
+  flyEncore: {
+    shadowColor: '#667eea',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 14,
+    elevation: 7,
   },
 };
 
@@ -229,6 +237,14 @@ export const commonStyles = StyleSheet.create({
     width: '100%',
     ...shadows.small,
   },
+  cardFlyEncore: {
+    backgroundColor: colors.card,
+    borderRadius: 28,
+    padding: 28,
+    marginVertical: 16,
+    width: '100%',
+    ...shadows.flyEncore,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -264,9 +280,9 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 30,
     paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingVertical: 16,
     marginVertical: 12,
-    ...shadows.small,
+    ...shadows.medium,
   },
   searchInput: {
     flex: 1,
@@ -318,6 +334,13 @@ export const commonStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+  },
+  headerGradientFlyEncore: {
+    paddingTop: 70,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 35,
+    borderBottomRightRadius: 35,
   },
   floatingButton: {
     position: 'absolute',

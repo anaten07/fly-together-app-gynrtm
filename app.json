@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Natively",
-    "slug": "Natively",
+    "name": "Fly Encore",
+    "slug": "Fly Encore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -41,5 +41,6 @@
     "extra": {
       "router": {}
     }
-  }
+  },
+  "scheme": "Fly Encore"
 }
