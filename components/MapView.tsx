@@ -19,13 +19,33 @@ interface MapViewProps {
   pilots: Pilot[];
 }
 
+// Conditional import for react-native-maps
+let MapViewNative: any = null;
+let Marker: any = null;
+let Circle: any = null;
+
+if (Platform.OS !== 'web') {
+  try {
+    const maps = require('react-native-maps');
+    MapViewNative = maps.default;
+    Marker = maps.Marker;
+    Circle = maps.Circle;
+  } catch (error) {
+    console.warn('react-native-maps not available:', error);
+  }
+}
+
 export default function MapView({ pilots }: MapViewProps) {
   const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
   const [locationPermission, setLocationPermission] = useState<boolean>(false);
   const [isLoadingLocation, setIsLoadingLocation] = useState<boolean>(true);
 
   useEffect(() => {
-    requestLocationPermission();
+    if (Platform.OS !== 'web') {
+      requestLocationPermission();
+    } else {
+      setIsLoadingLocation(false);
+    }
   }, []);
 
   const requestLocationPermission = async () => {
@@ -157,18 +177,31 @@ export default function MapView({ pilots }: MapViewProps) {
   }
 
   // For mobile platforms, show the actual map
-  try {
-    const MapView = require('react-native-maps').default;
-    const { Marker, Circle } = require('react-native-maps');
-
+  if (!MapViewNative || !Marker || !Circle) {
     return (
       <View style={[commonStyles.mapContainer, {
         backgroundColor: colors.backgroundAlt,
         borderWidth: 2,
-        borderColor: colors.primary,
+        borderColor: colors.border,
         ...shadows.large,
+        alignItems: 'center',
+        justifyContent: 'center',
       }]}>
-        {isLoadingLocation ? (
+        <Text style={[commonStyles.subtitle, { color: colors.text }]}>
+          Map not available
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[commonStyles.mapContainer, {
+      backgroundColor: colors.backgroundAlt,
+      borderWidth: 2,
+      borderColor: colors.primary,
+      ...shadows.large,
+    }]}>
+      {isLoadingLocation ? (
         <View style={{
           flex: 1,
           alignItems: 'center',
@@ -237,7 +270,7 @@ export default function MapView({ pilots }: MapViewProps) {
           </Text>
         </View>
       ) : (
-        <MapView
+        <MapViewNative
           style={{ flex: 1 }}
           initialRegion={{
             latitude: userLocation?.coords.latitude || 37.7749,
@@ -296,7 +329,7 @@ export default function MapView({ pilots }: MapViewProps) {
               </Marker>
             );
           })}
-        </MapView>
+        </MapViewNative>
       )}
 
       {/* Map Overlay Info */}
@@ -350,22 +383,5 @@ export default function MapView({ pilots }: MapViewProps) {
         </View>
       </View>
     </View>
-    );
-  } catch (error) {
-    console.error('Error loading react-native-maps:', error);
-    return (
-      <View style={[commonStyles.mapContainer, {
-        backgroundColor: colors.backgroundAlt,
-        borderWidth: 2,
-        borderColor: colors.border,
-        ...shadows.large,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }]}>
-        <Text style={[commonStyles.subtitle, { color: colors.text }]}>
-          Map not available
-        </Text>
-      </View>
-    );
-  }
+  );
 }
