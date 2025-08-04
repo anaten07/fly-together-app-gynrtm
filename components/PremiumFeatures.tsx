@@ -52,7 +52,7 @@ const premiumFeatures: PremiumFeature[] = [
     title: 'Fly Rewards',
     description: 'Earn points for every flight and unlock exclusive experiences',
     icon: 'gift',
-    color: colors.accent,
+    color: colors.primary,
     premium: false,
   },
   {
@@ -180,7 +180,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
       <View style={{ paddingHorizontal: 20, marginBottom: 16 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
           <LinearGradient
-            colors={[colors.primary, colors.accent]}
+            colors={[colors.primary, colors.primaryLight]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
@@ -233,7 +233,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
           activeOpacity={0.9}
         >
           <LinearGradient
-            colors={[colors.primary, colors.accent]}
+            colors={[colors.primary, colors.primaryLight]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{

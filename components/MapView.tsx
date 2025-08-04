@@ -4,7 +4,7 @@ import { View, Text, Platform, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import Icon from './Icon';
-import { commonStyles, colors, gradients, shadows } from '../styles/commonStyles';
+import { commonStyles, colors, shadows } from '../styles/commonStyles';
 
 interface Pilot {
   id: string;
@@ -157,17 +157,18 @@ export default function MapView({ pilots }: MapViewProps) {
   }
 
   // For mobile platforms, show the actual map
-  const MapView = require('react-native-maps').default;
-  const { Marker, Circle } = require('react-native-maps');
+  try {
+    const MapView = require('react-native-maps').default;
+    const { Marker, Circle } = require('react-native-maps');
 
-  return (
-    <View style={[commonStyles.mapContainer, {
-      backgroundColor: colors.backgroundAlt,
-      borderWidth: 2,
-      borderColor: colors.primary,
-      ...shadows.large,
-    }]}>
-      {isLoadingLocation ? (
+    return (
+      <View style={[commonStyles.mapContainer, {
+        backgroundColor: colors.backgroundAlt,
+        borderWidth: 2,
+        borderColor: colors.primary,
+        ...shadows.large,
+      }]}>
+        {isLoadingLocation ? (
         <View style={{
           flex: 1,
           alignItems: 'center',
@@ -349,5 +350,22 @@ export default function MapView({ pilots }: MapViewProps) {
         </View>
       </View>
     </View>
-  );
+    );
+  } catch (error) {
+    console.error('Error loading react-native-maps:', error);
+    return (
+      <View style={[commonStyles.mapContainer, {
+        backgroundColor: colors.backgroundAlt,
+        borderWidth: 2,
+        borderColor: colors.border,
+        ...shadows.large,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }]}>
+        <Text style={[commonStyles.subtitle, { color: colors.text }]}>
+          Map not available
+        </Text>
+      </View>
+    );
+  }
 }

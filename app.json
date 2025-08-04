@@ -2,7 +2,7 @@
 {
   "expo": {
     "name": "Fly Encore",
-    "slug": "Fly Encore",
+    "slug": "fly-encore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/0ea5225b-95c4-44da-a854-cc38887562fd.png",
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Natively",
+      "bundleIdentifier": "com.anonymous.flyencore",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/images/0ea5225b-95c4-44da-a854-cc38887562fd.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.anonymous.Natively"
+      "package": "com.anonymous.flyencore"
     },
     "web": {
       "favicon": "./assets/images/0ea5225b-95c4-44da-a854-cc38887562fd.png",
@@ -33,15 +33,20 @@
     },
     "plugins": [
       "expo-font",
-      "expo-router"
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "This app needs access to location when open and in the background."
+        }
+      ]
     ],
-    "scheme": "natively",
+    "scheme": "flyencore",
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "router": {}
     }
-  },
-  "scheme": "Fly Encore"
+  }
 }

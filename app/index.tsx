@@ -1,7 +1,7 @@
 
+import React, { useState } from 'react';
 import { Text, View, ScrollView, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 import { router } from 'expo-router';
-import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { commonStyles, colors, shadows } from '../styles/commonStyles';
 import Icon from '../components/Icon';

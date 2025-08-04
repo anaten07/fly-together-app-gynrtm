@@ -176,7 +176,7 @@ export default function Button({
       {icon && iconPosition === 'left' && (
         <View style={styles.iconContainer}>{icon}</View>
       )}
-      <Text style={[...getTextStyle(), textStyle]}>{text}</Text>
+      <Text style={[getTextStyle(), textStyle].flat()}>{text}</Text>
       {icon && iconPosition === 'right' && (
         <View style={styles.iconContainer}>{icon}</View>
       )}
@@ -186,7 +186,7 @@ export default function Button({
   if (variant === 'gradient' && !disabled) {
     return (
       <TouchableOpacity
-        style={[...getButtonStyle(), style]}
+        style={[getButtonStyle(), style].flat()}
         onPress={onPress}
         disabled={disabled}
         activeOpacity={0.8}
@@ -204,7 +204,7 @@ export default function Button({
 
   return (
     <TouchableOpacity
-      style={[...getButtonStyle(), style]}
+      style={[getButtonStyle(), style].flat()}
       onPress={onPress}
       disabled={disabled}
       activeOpacity={0.8}
