@@ -7,6 +7,8 @@ import { commonStyles, colors, shadows } from '../styles/commonStyles';
 import Icon from '../components/Icon';
 import PilotCard from '../components/PilotCard';
 import MapView from '../components/MapView';
+import PremiumFeatures from '../components/PremiumFeatures';
+import FlightBooking from '../components/FlightBooking';
 
 // Mock data for pilots
 const mockPilots = [
@@ -72,6 +74,8 @@ export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPilots, setFilteredPilots] = useState(mockPilots);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedPilot, setSelectedPilot] = useState<string>('');
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -95,6 +99,27 @@ export default function HomeScreen() {
   const handlePilotPress = (pilotId: string) => {
     console.log('Navigating to pilot profile:', pilotId);
     router.push(`/pilot/${pilotId}`);
+  };
+
+  const handleFeaturePress = (featureId: string) => {
+    console.log('Feature pressed:', featureId);
+    if (featureId === 'upgrade') {
+      // Handle premium upgrade
+      console.log('Upgrade to premium pressed');
+    } else {
+      // Handle specific feature
+      console.log('Feature details:', featureId);
+    }
+  };
+
+  const handleQuickBook = (pilotName: string) => {
+    setSelectedPilot(pilotName);
+    setShowBookingModal(true);
+  };
+
+  const handleBookFlight = (flightType: string) => {
+    console.log('Flight booked:', flightType, 'with', selectedPilot);
+    // Handle flight booking logic here
   };
 
   return (
@@ -182,58 +207,100 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Stats */}
+        {/* Quick Actions */}
         <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={[commonStyles.cardCompact, { 
-              flex: 1, 
-              marginRight: 8,
-              alignItems: 'center',
-              backgroundColor: colors.background,
-              borderColor: colors.border,
-            }]}>
-              <Icon name="people" size={24} color={colors.primary} />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
+            <TouchableOpacity
+              style={[commonStyles.cardCompact, { 
+                flex: 1,
+                alignItems: 'center',
+                backgroundColor: colors.background,
+                borderColor: colors.primary,
+                borderWidth: 2,
+                ...shadows.orange,
+              }]}
+              onPress={() => handleQuickBook('Quick Book')}
+              activeOpacity={0.8}
+            >
+              <Icon name="flash" size={24} color={colors.primary} />
               <Text style={[commonStyles.subtitleMedium, { 
                 marginTop: 8,
                 marginBottom: 4, 
                 color: colors.text,
-                fontSize: 20,
+                fontSize: 14,
                 fontWeight: '700',
+                textAlign: 'center',
               }]}>
-                {mockPilots.length}
+                Quick Book
               </Text>
               <Text style={[commonStyles.textMuted, { 
                 color: colors.textLight, 
-                fontSize: 12,
+                fontSize: 11,
+                textAlign: 'center',
               }]}>
-                Active Pilots
+                Instant Flight
               </Text>
-            </View>
+            </TouchableOpacity>
             
-            <View style={[commonStyles.cardCompact, { 
-              flex: 1, 
-              marginLeft: 8,
-              alignItems: 'center',
-              backgroundColor: colors.background,
-              borderColor: colors.border,
-            }]}>
-              <Icon name="star" size={24} color={colors.primary} />
+            <TouchableOpacity
+              style={[commonStyles.cardCompact, { 
+                flex: 1,
+                alignItems: 'center',
+                backgroundColor: colors.background,
+                borderColor: colors.border,
+              }]}
+              onPress={() => console.log('Weather pressed')}
+              activeOpacity={0.8}
+            >
+              <Icon name="cloud" size={24} color={colors.primary} />
               <Text style={[commonStyles.subtitleMedium, { 
                 marginTop: 8,
                 marginBottom: 4, 
                 color: colors.text,
-                fontSize: 20,
+                fontSize: 14,
                 fontWeight: '700',
+                textAlign: 'center',
               }]}>
-                4.8
+                Weather
               </Text>
               <Text style={[commonStyles.textMuted, { 
                 color: colors.textLight, 
-                fontSize: 12,
+                fontSize: 11,
+                textAlign: 'center',
               }]}>
-                Avg Rating
+                Conditions
               </Text>
-            </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[commonStyles.cardCompact, { 
+                flex: 1,
+                alignItems: 'center',
+                backgroundColor: colors.background,
+                borderColor: colors.border,
+              }]}
+              onPress={() => console.log('Safety pressed')}
+              activeOpacity={0.8}
+            >
+              <Icon name="shield-checkmark" size={24} color={colors.success} />
+              <Text style={[commonStyles.subtitleMedium, { 
+                marginTop: 8,
+                marginBottom: 4, 
+                color: colors.text,
+                fontSize: 14,
+                fontWeight: '700',
+                textAlign: 'center',
+              }]}>
+                Safety
+              </Text>
+              <Text style={[commonStyles.textMuted, { 
+                color: colors.textLight, 
+                fontSize: 11,
+                textAlign: 'center',
+              }]}>
+                Score: 9.8
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -241,6 +308,9 @@ export default function HomeScreen() {
         <View style={{ paddingHorizontal: 20 }}>
           <MapView pilots={mockPilots} />
         </View>
+
+        {/* Premium Features */}
+        <PremiumFeatures onFeaturePress={handleFeaturePress} />
 
         {/* Filter Buttons */}
         <View style={{ paddingHorizontal: 20, marginVertical: 25 }}>
@@ -358,6 +428,14 @@ export default function HomeScreen() {
           )}
         </View>
       </ScrollView>
+
+      {/* Flight Booking Modal */}
+      <FlightBooking
+        visible={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        pilotName={selectedPilot}
+        onBookFlight={handleBookFlight}
+      />
     </View>
   );
 }
