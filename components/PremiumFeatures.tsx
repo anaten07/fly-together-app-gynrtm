@@ -5,23 +5,21 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Icon from './Icon';
 import { commonStyles, colors, shadows } from '../styles/commonStyles';
 
-interface PremiumFeature {
+interface Feature {
   id: string;
   title: string;
   description: string;
   icon: string;
   color: string;
-  premium: boolean;
 }
 
-const premiumFeatures: PremiumFeature[] = [
+const features: Feature[] = [
   {
     id: 'weather',
     title: 'Real-Time Weather',
     description: 'Live weather updates and flight conditions for safe flying',
     icon: 'cloud',
     color: colors.primary,
-    premium: false,
   },
   {
     id: 'safety',
@@ -29,31 +27,13 @@ const premiumFeatures: PremiumFeature[] = [
     description: 'AI-powered safety ratings based on pilot history and conditions',
     icon: 'shield-checkmark',
     color: colors.success,
-    premium: true,
   },
   {
-    id: 'insurance',
-    title: 'Flight Insurance',
-    description: 'Comprehensive coverage for every flight you book',
-    icon: 'umbrella',
-    color: colors.warning,
-    premium: true,
-  },
-  {
-    id: 'concierge',
-    title: 'Flight Concierge',
-    description: '24/7 support for flight planning and emergency assistance',
-    icon: 'headset',
-    color: colors.primary,
-    premium: true,
-  },
-  {
-    id: 'rewards',
-    title: 'Fly Rewards',
-    description: 'Earn points for every flight and unlock exclusive experiences',
-    icon: 'gift',
-    color: colors.primary,
-    premium: false,
+    id: 'booking',
+    title: 'Easy Booking',
+    description: 'Simple and fast flight booking with instant confirmations',
+    icon: 'calendar',
+    color: colors.secondary,
   },
   {
     id: 'community',
@@ -61,7 +41,20 @@ const premiumFeatures: PremiumFeature[] = [
     description: 'Connect with aviation enthusiasts and share experiences',
     icon: 'people',
     color: colors.secondary,
-    premium: false,
+  },
+  {
+    id: 'history',
+    title: 'Flight History',
+    description: 'Track all your flights and build your aviation portfolio',
+    icon: 'time',
+    color: colors.primary,
+  },
+  {
+    id: 'support',
+    title: 'Community Support',
+    description: 'Get help from our amazing pilot community',
+    icon: 'help-circle',
+    color: colors.warning,
   },
 ];
 
@@ -70,7 +63,7 @@ interface PremiumFeaturesProps {
 }
 
 export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps) {
-  const renderFeatureCard = (feature: PremiumFeature) => (
+  const renderFeatureCard = (feature: Feature) => (
     <TouchableOpacity
       key={feature.id}
       style={[
@@ -80,36 +73,34 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
           padding: 20,
           marginRight: 16,
           width: 280,
-          borderWidth: feature.premium ? 2 : 1,
-          borderColor: feature.premium ? colors.primary : colors.border,
+          borderWidth: 1,
+          borderColor: colors.border,
           ...shadows.medium,
         }
       ]}
       onPress={() => onFeaturePress(feature.id)}
       activeOpacity={0.8}
     >
-      {feature.premium && (
-        <View style={{
-          position: 'absolute',
-          top: -1,
-          right: -1,
-          backgroundColor: colors.primary,
-          paddingHorizontal: 12,
-          paddingVertical: 4,
-          borderTopRightRadius: 20,
-          borderBottomLeftRadius: 12,
-          ...shadows.small,
-        }}>
-          <Text style={[commonStyles.textMuted, {
-            color: colors.textInverse,
-            fontSize: 10,
-            fontWeight: '700',
-            letterSpacing: 0.5,
-          }]}>
-            PREMIUM
-          </Text>
-        </View>
-      )}
+      <View style={{
+        position: 'absolute',
+        top: -1,
+        right: -1,
+        backgroundColor: colors.success,
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderTopRightRadius: 20,
+        borderBottomLeftRadius: 12,
+        ...shadows.small,
+      }}>
+        <Text style={[commonStyles.textMuted, {
+          color: colors.textInverse,
+          fontSize: 10,
+          fontWeight: '700',
+          letterSpacing: 0.5,
+        }]}>
+          FREE
+        </Text>
+      </View>
 
       <View style={{
         backgroundColor: `${feature.color}15`,
@@ -148,7 +139,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
         justifyContent: 'space-between',
       }}>
         <View style={{
-          backgroundColor: feature.premium ? colors.primary : colors.success,
+          backgroundColor: colors.success,
           paddingHorizontal: 12,
           paddingVertical: 6,
           borderRadius: 12,
@@ -156,7 +147,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
           alignItems: 'center',
         }}>
           <Icon 
-            name={feature.premium ? 'star' : 'checkmark'} 
+            name="checkmark" 
             size={12} 
             color={colors.textInverse} 
           />
@@ -166,7 +157,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
             fontSize: 11,
             fontWeight: '600',
           }]}>
-            {feature.premium ? 'Premium' : 'Free'}
+            Free
           </Text>
         </View>
 
@@ -180,7 +171,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
       <View style={{ paddingHorizontal: 20, marginBottom: 16 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
           <LinearGradient
-            colors={[colors.primary, colors.primaryLight]}
+            colors={[colors.success, colors.primary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
@@ -189,7 +180,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
               marginRight: 12,
             }}
           >
-            <Icon name="diamond" size={20} color={colors.textInverse} />
+            <Icon name="heart" size={20} color={colors.textInverse} />
           </LinearGradient>
           
           <Text style={[commonStyles.subtitle, {
@@ -206,7 +197,7 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
           color: colors.textLight,
           lineHeight: 22,
         }]}>
-          Discover what makes us different from other pilot connection apps
+          All features are completely free - no hidden costs, no premium tiers
         </Text>
       </View>
 
@@ -215,10 +206,10 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20 }}
       >
-        {premiumFeatures.map(renderFeatureCard)}
+        {features.map(renderFeatureCard)}
       </ScrollView>
 
-      {/* Premium CTA */}
+      {/* Community CTA */}
       <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
         <TouchableOpacity
           style={{
@@ -226,14 +217,14 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
             borderRadius: 20,
             padding: 20,
             borderWidth: 2,
-            borderColor: colors.primary,
-            ...shadows.orange,
+            borderColor: colors.success,
+            ...shadows.medium,
           }}
-          onPress={() => onFeaturePress('upgrade')}
+          onPress={() => onFeaturePress('community')}
           activeOpacity={0.9}
         >
           <LinearGradient
-            colors={[colors.primary, colors.primaryLight]}
+            colors={[colors.success, colors.primary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
@@ -256,14 +247,14 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
           }}>
             <View style={{ flex: 1 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                <Icon name="star" size={20} color={colors.primary} />
+                <Icon name="people" size={20} color={colors.success} />
                 <Text style={[commonStyles.subtitleMedium, {
                   fontSize: 18,
                   fontWeight: '700',
                   color: colors.text,
                   marginLeft: 8,
                 }]}>
-                  Upgrade to Premium
+                  Join Our Community
                 </Text>
               </View>
               
@@ -272,12 +263,12 @@ export default function PremiumFeatures({ onFeaturePress }: PremiumFeaturesProps
                 color: colors.textLight,
                 lineHeight: 20,
               }]}>
-                Unlock safety scores, flight insurance, and 24/7 concierge support
+                Connect with pilots, share experiences, and help us keep everything free
               </Text>
             </View>
             
             <View style={{
-              backgroundColor: colors.primary,
+              backgroundColor: colors.success,
               borderRadius: 16,
               padding: 12,
               marginLeft: 16,

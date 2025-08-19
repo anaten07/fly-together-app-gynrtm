@@ -6,67 +6,7 @@ import { commonStyles, colors, shadows } from '../../styles/commonStyles';
 import Icon from '../../components/Icon';
 import Button from '../../components/Button';
 
-interface PremiumPlan {
-  id: string;
-  name: string;
-  price: string;
-  period: string;
-  features: string[];
-  popular?: boolean;
-  color: string;
-}
-
-const premiumPlans: PremiumPlan[] = [
-  {
-    id: 'basic',
-    name: 'Sky Explorer',
-    price: '$19',
-    period: '/month',
-    color: colors.primary,
-    features: [
-      'Unlimited pilot searches',
-      'Basic weather reports',
-      'Standard booking support',
-      'Flight history tracking',
-      'Basic safety scores',
-    ],
-  },
-  {
-    id: 'premium',
-    name: 'Cloud Navigator',
-    price: '$49',
-    period: '/month',
-    popular: true,
-    color: colors.secondary,
-    features: [
-      'Everything in Sky Explorer',
-      'Real-time weather radar',
-      'Priority booking support',
-      'Advanced safety analytics',
-      'Flight insurance included',
-      '24/7 concierge service',
-      'Premium pilot network',
-    ],
-  },
-  {
-    id: 'elite',
-    name: 'Aviation Elite',
-    price: '$99',
-    period: '/month',
-    color: colors.primary,
-    features: [
-      'Everything in Cloud Navigator',
-      'Personal flight coordinator',
-      'Luxury aircraft access',
-      'VIP airport services',
-      'Custom flight planning',
-      'Emergency assistance',
-      'Exclusive events access',
-    ],
-  },
-];
-
-const premiumFeatures = [
+const freeFeatures = [
   {
     id: 'weather',
     title: 'Advanced Weather',
@@ -82,162 +22,43 @@ const premiumFeatures = [
     color: colors.success,
   },
   {
-    id: 'concierge',
-    title: '24/7 Concierge',
-    description: 'Personal flight assistant available around the clock for any needs',
-    icon: 'person-circle-outline',
-    color: colors.secondary,
-  },
-  {
-    id: 'insurance',
-    title: 'Flight Insurance',
-    description: 'Comprehensive coverage for every flight with instant claims processing',
-    icon: 'umbrella-outline',
-    color: colors.warning,
-  },
-  {
-    id: 'priority',
-    title: 'Priority Support',
-    description: 'Skip the line with dedicated premium customer support',
-    icon: 'flash-outline',
-    color: colors.primary,
-  },
-  {
     id: 'network',
     title: 'Elite Pilot Network',
     description: 'Access to our most experienced and highly-rated pilots',
     icon: 'star-outline',
     color: colors.warning,
   },
+  {
+    id: 'booking',
+    title: 'Unlimited Bookings',
+    description: 'Book as many flights as you want with no restrictions',
+    icon: 'calendar-outline',
+    color: colors.secondary,
+  },
+  {
+    id: 'history',
+    title: 'Flight History',
+    description: 'Track all your flights and build your aviation portfolio',
+    icon: 'time-outline',
+    color: colors.primary,
+  },
+  {
+    id: 'community',
+    title: 'Pilot Community',
+    description: 'Connect with aviation enthusiasts and share experiences',
+    icon: 'people-outline',
+    color: colors.secondary,
+  },
 ];
 
 export default function PremiumScreen() {
-  const [selectedPlan, setSelectedPlan] = useState<string>('premium');
-
-  const handlePlanSelect = (planId: string) => {
-    console.log('Plan selected:', planId);
-    setSelectedPlan(planId);
-  };
-
-  const handleUpgrade = () => {
-    console.log('Upgrading to plan:', selectedPlan);
-    // Handle upgrade logic here
-  };
-
-  const renderPlanCard = (plan: PremiumPlan) => (
-    <TouchableOpacity
-      key={plan.id}
-      style={[
-        commonStyles.card,
-        {
-          borderWidth: 2,
-          borderColor: selectedPlan === plan.id ? plan.color : colors.border,
-          backgroundColor: selectedPlan === plan.id ? `${plan.color}10` : colors.background,
-          marginHorizontal: 10,
-          minWidth: 280,
-          position: 'relative',
-        },
-        selectedPlan === plan.id ? shadows.orange : shadows.small,
-      ]}
-      onPress={() => handlePlanSelect(plan.id)}
-      activeOpacity={0.8}
-    >
-      {plan.popular && (
-        <View style={{
-          position: 'absolute',
-          top: -10,
-          left: 20,
-          right: 20,
-          backgroundColor: colors.primary,
-          paddingVertical: 6,
-          borderRadius: 12,
-          alignItems: 'center',
-          ...shadows.medium,
-        }}>
-          <Text style={[commonStyles.textMedium, {
-            color: colors.textInverse,
-            fontSize: 12,
-            fontWeight: '700',
-          }]}>
-            MOST POPULAR
-          </Text>
-        </View>
-      )}
-
-      <View style={{ alignItems: 'center', marginTop: plan.popular ? 20 : 0 }}>
-        <Text style={[commonStyles.subtitle, {
-          fontSize: 24,
-          fontWeight: '800',
-          color: plan.color,
-          marginBottom: 8,
-        }]}>
-          {plan.name}
-        </Text>
-
-        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginBottom: 20 }}>
-          <Text style={[commonStyles.titleLarge, {
-            fontSize: 48,
-            fontWeight: '900',
-            color: colors.text,
-          }]}>
-            {plan.price}
-          </Text>
-          <Text style={[commonStyles.textLight, {
-            fontSize: 16,
-            color: colors.textMuted,
-            marginLeft: 4,
-          }]}>
-            {plan.period}
-          </Text>
-        </View>
-      </View>
-
-      <View style={{ marginTop: 20 }}>
-        {plan.features.map((feature, index) => (
-          <View key={index} style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 12,
-          }}>
-            <Icon name="checkmark-circle" size={20} color={colors.success} />
-            <Text style={[commonStyles.text, {
-              marginLeft: 12,
-              flex: 1,
-              fontSize: 14,
-              color: colors.text,
-            }]}>
-              {feature}
-            </Text>
-          </View>
-        ))}
-      </View>
-
-      {selectedPlan === plan.id && (
-        <View style={{
-          marginTop: 20,
-          padding: 12,
-          backgroundColor: `${plan.color}20`,
-          borderRadius: 12,
-          alignItems: 'center',
-        }}>
-          <Icon name="checkmark-circle" size={24} color={plan.color} />
-          <Text style={[commonStyles.textMedium, {
-            marginTop: 8,
-            color: plan.color,
-            fontWeight: '700',
-          }]}>
-            Selected Plan
-          </Text>
-        </View>
-      )}
-    </TouchableOpacity>
-  );
-
-  const renderFeatureCard = (feature: typeof premiumFeatures[0]) => (
+  const renderFeatureCard = (feature: typeof freeFeatures[0]) => (
     <View key={feature.id} style={[commonStyles.card, {
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: 16,
+      borderLeftWidth: 4,
+      borderLeftColor: feature.color,
     }]}>
       <View style={{
         width: 60,
@@ -252,14 +73,30 @@ export default function PremiumScreen() {
       </View>
 
       <View style={{ flex: 1 }}>
-        <Text style={[commonStyles.subtitleMedium, {
-          fontSize: 18,
-          fontWeight: '700',
-          color: colors.text,
-          marginBottom: 4,
-        }]}>
-          {feature.title}
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+          <Text style={[commonStyles.subtitleMedium, {
+            fontSize: 18,
+            fontWeight: '700',
+            color: colors.text,
+            flex: 1,
+          }]}>
+            {feature.title}
+          </Text>
+          <View style={{
+            backgroundColor: colors.success,
+            paddingHorizontal: 8,
+            paddingVertical: 4,
+            borderRadius: 8,
+          }}>
+            <Text style={[commonStyles.textMuted, {
+              color: colors.textInverse,
+              fontSize: 10,
+              fontWeight: '700',
+            }]}>
+              FREE
+            </Text>
+          </View>
+        </View>
         <Text style={[commonStyles.textLight, {
           fontSize: 14,
           color: colors.textLight,
@@ -273,18 +110,18 @@ export default function PremiumScreen() {
 
   return (
     <View style={commonStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.secondary} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
       
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <LinearGradient
-          colors={[colors.secondary, colors.primary]}
+          colors={[colors.primary, colors.secondary]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[commonStyles.headerGradient, { paddingTop: 60, paddingBottom: 40 }]}
         >
           <View style={{ alignItems: 'center' }}>
-            <Icon name="diamond" size={48} color={colors.textInverse} />
+            <Icon name="heart" size={48} color={colors.textInverse} />
             <Text style={[commonStyles.titleLarge, {
               color: colors.textInverse,
               fontSize: 32,
@@ -292,20 +129,21 @@ export default function PremiumScreen() {
               marginTop: 16,
               marginBottom: 8,
             }]}>
-              Upgrade to Premium
+              Fly Encore is Free!
             </Text>
             <Text style={[commonStyles.text, {
               color: colors.textInverse,
               textAlign: 'center',
               fontSize: 16,
               opacity: 0.9,
+              paddingHorizontal: 20,
             }]}>
-              Unlock exclusive features and elevate your flying experience
+              All features are completely free. Connect with pilots and enjoy flying without any costs.
             </Text>
           </View>
         </LinearGradient>
 
-        {/* Premium Features */}
+        {/* Free Features */}
         <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
           <Text style={[commonStyles.subtitle, {
             fontSize: 24,
@@ -314,75 +152,96 @@ export default function PremiumScreen() {
             marginBottom: 20,
             textAlign: 'center',
           }]}>
-            Premium Features
+            Everything is Free
           </Text>
 
-          {premiumFeatures.map(renderFeatureCard)}
+          {freeFeatures.map(renderFeatureCard)}
         </View>
 
-        {/* Pricing Plans */}
-        <View style={{ marginTop: 40 }}>
-          <Text style={[commonStyles.subtitle, {
-            fontSize: 24,
-            fontWeight: '800',
-            color: colors.text,
-            marginBottom: 30,
-            textAlign: 'center',
-            paddingHorizontal: 20,
-          }]}>
-            Choose Your Plan
-          </Text>
-
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 10 }}
-          >
-            {premiumPlans.map(renderPlanCard)}
-          </ScrollView>
-        </View>
-
-        {/* Upgrade Button */}
+        {/* Community Message */}
         <View style={{ paddingHorizontal: 20, marginTop: 40, marginBottom: 100 }}>
-          <Button
-            text={`Upgrade to ${premiumPlans.find(p => p.id === selectedPlan)?.name || 'Premium'}`}
-            onPress={handleUpgrade}
-            variant="gradient"
-            size="large"
-            icon={<Icon name="diamond" size={20} color={colors.textInverse} />}
-            iconPosition="left"
-          />
-
-          <View style={{
-            flexDirection: 'row',
+          <View style={[commonStyles.card, {
+            backgroundColor: `${colors.primary}10`,
+            borderWidth: 2,
+            borderColor: colors.primary,
             alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 20,
-          }}>
-            <Icon name="shield-checkmark" size={16} color={colors.success} />
-            <Text style={[commonStyles.textLight, {
-              marginLeft: 8,
-              fontSize: 12,
-              color: colors.textMuted,
+            padding: 30,
+          }]}>
+            <Icon name="people" size={48} color={colors.primary} />
+            <Text style={[commonStyles.subtitle, {
+              fontSize: 22,
+              fontWeight: '800',
+              color: colors.text,
+              marginTop: 16,
+              marginBottom: 12,
+              textAlign: 'center',
             }]}>
-              30-day money-back guarantee
+              Built by Pilots, for Pilots
             </Text>
+            <Text style={[commonStyles.text, {
+              fontSize: 16,
+              color: colors.textLight,
+              textAlign: 'center',
+              lineHeight: 24,
+              marginBottom: 20,
+            }]}>
+              Our mission is to make aviation accessible to everyone. That's why we've made Fly Encore completely free - no hidden fees, no premium tiers, just pure flying passion.
+            </Text>
+            
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: colors.success,
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              borderRadius: 20,
+            }}>
+              <Icon name="checkmark-circle" size={20} color={colors.textInverse} />
+              <Text style={[commonStyles.textMedium, {
+                color: colors.textInverse,
+                marginLeft: 8,
+                fontWeight: '700',
+              }]}>
+                Always Free, Always Yours
+              </Text>
+            </View>
           </View>
 
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 8,
-          }}>
-            <Icon name="card" size={16} color={colors.textMuted} />
-            <Text style={[commonStyles.textLight, {
-              marginLeft: 8,
-              fontSize: 12,
-              color: colors.textMuted,
+          {/* Support Message */}
+          <View style={[commonStyles.card, {
+            marginTop: 20,
+            backgroundColor: colors.background,
+            borderWidth: 1,
+            borderColor: colors.border,
+          }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+              <Icon name="heart-outline" size={24} color={colors.primary} />
+              <Text style={[commonStyles.subtitleMedium, {
+                fontSize: 18,
+                fontWeight: '700',
+                color: colors.text,
+                marginLeft: 12,
+              }]}>
+                Love Fly Encore?
+              </Text>
+            </View>
+            <Text style={[commonStyles.text, {
+              fontSize: 14,
+              color: colors.textLight,
+              lineHeight: 20,
+              marginBottom: 16,
             }]}>
-              Cancel anytime • No hidden fees
+              Help us spread the word! Share the app with fellow pilots and aviation enthusiasts. Your support helps us keep everything free for the community.
             </Text>
+            
+            <Button
+              text="Share with Friends"
+              onPress={() => console.log('Share app')}
+              variant="outline"
+              size="medium"
+              icon={<Icon name="share-outline" size={18} color={colors.primary} />}
+              iconPosition="left"
+            />
           </View>
         </View>
       </ScrollView>
