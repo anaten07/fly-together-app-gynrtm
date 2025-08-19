@@ -9,7 +9,168 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      pilots: {
+        Row: {
+          id: string
+          user_id: string | null
+          name: string
+          email: string
+          phone: string | null
+          bio: string | null
+          experience: string
+          aircraft: string
+          location: string
+          latitude: number | null
+          longitude: number | null
+          rating: number | null
+          total_flights: number | null
+          avatar_url: string | null
+          certifications: string[] | null
+          hourly_rate: number | null
+          available: boolean | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          name: string
+          email: string
+          phone?: string | null
+          bio?: string | null
+          experience: string
+          aircraft: string
+          location: string
+          latitude?: number | null
+          longitude?: number | null
+          rating?: number | null
+          total_flights?: number | null
+          avatar_url?: string | null
+          certifications?: string[] | null
+          hourly_rate?: number | null
+          available?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          name?: string
+          email?: string
+          phone?: string | null
+          bio?: string | null
+          experience?: string
+          aircraft?: string
+          location?: string
+          latitude?: number | null
+          longitude?: number | null
+          rating?: number | null
+          total_flights?: number | null
+          avatar_url?: string | null
+          certifications?: string[] | null
+          hourly_rate?: number | null
+          available?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+      }
+      flight_requests: {
+        Row: {
+          id: string
+          student_id: string | null
+          pilot_id: string | null
+          flight_type: string
+          requested_date: string | null
+          duration_hours: number | null
+          status: string | null
+          message: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          student_id?: string | null
+          pilot_id?: string | null
+          flight_type: string
+          requested_date?: string | null
+          duration_hours?: number | null
+          status?: string | null
+          message?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          student_id?: string | null
+          pilot_id?: string | null
+          flight_type?: string
+          requested_date?: string | null
+          duration_hours?: number | null
+          status?: string | null
+          message?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+      }
+      weather_data: {
+        Row: {
+          id: string
+          station_id: string
+          location: string
+          latitude: number | null
+          longitude: number | null
+          metar_data: Json | null
+          taf_data: Json | null
+          conditions: Json | null
+          visibility: number | null
+          wind_speed: number | null
+          wind_direction: number | null
+          temperature: number | null
+          dewpoint: number | null
+          pressure: number | null
+          flight_category: string | null
+          last_updated: string | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          station_id: string
+          location: string
+          latitude?: number | null
+          longitude?: number | null
+          metar_data?: Json | null
+          taf_data?: Json | null
+          conditions?: Json | null
+          visibility?: number | null
+          wind_speed?: number | null
+          wind_direction?: number | null
+          temperature?: number | null
+          dewpoint?: number | null
+          pressure?: number | null
+          flight_category?: string | null
+          last_updated?: string | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          station_id?: string
+          location?: string
+          latitude?: number | null
+          longitude?: number | null
+          metar_data?: Json | null
+          taf_data?: Json | null
+          conditions?: Json | null
+          visibility?: number | null
+          wind_speed?: number | null
+          wind_direction?: number | null
+          temperature?: number | null
+          dewpoint?: number | null
+          pressure?: number | null
+          flight_category?: string | null
+          last_updated?: string | null
+          created_at?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never
