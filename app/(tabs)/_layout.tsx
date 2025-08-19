@@ -9,8 +9,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 // Import tab screens
 import HomeScreen from './index';
 import PremiumScreen from './premium';
-import ConciergeScreen from './concierge';
-import InsuranceScreen from './insurance';
 import ProfileScreen from './profile';
 
 const Tab = createBottomTabNavigator();
@@ -28,18 +26,6 @@ const tabColors = {
     inactive: '#CE93D8',
     gradient: ['#9C27B0', '#BA68C8'],
     background: 'rgba(156, 39, 176, 0.1)',
-  },
-  concierge: {
-    active: '#2196F3',
-    inactive: '#90CAF9',
-    gradient: ['#2196F3', '#64B5F6'],
-    background: 'rgba(33, 150, 243, 0.1)',
-  },
-  insurance: {
-    active: '#4CAF50',
-    inactive: '#A5D6A7',
-    gradient: ['#4CAF50', '#81C784'],
-    background: 'rgba(76, 175, 80, 0.1)',
   },
   profile: {
     active: '#FF5722',
@@ -60,12 +46,6 @@ const TabIcon = ({ route, focused, size }: { route: any, focused: boolean, size:
       break;
     case 'premium':
       iconName = focused ? 'diamond' : 'diamond-outline';
-      break;
-    case 'concierge':
-      iconName = focused ? 'person-circle' : 'person-circle-outline';
-      break;
-    case 'insurance':
-      iconName = focused ? 'shield-checkmark' : 'shield-checkmark-outline';
       break;
     case 'profile':
       iconName = focused ? 'person' : 'person-outline';
@@ -178,20 +158,6 @@ export default function TabLayout() {
         component={PremiumScreen}
         options={{
           title: 'Premium',
-        }}
-      />
-      <Tab.Screen 
-        name="concierge" 
-        component={ConciergeScreen}
-        options={{
-          title: 'Concierge',
-        }}
-      />
-      <Tab.Screen 
-        name="insurance" 
-        component={InsuranceScreen}
-        options={{
-          title: 'Insurance',
         }}
       />
       <Tab.Screen 
