@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
 import { Platform, SafeAreaView } from 'react-native';
 import { Stack, useGlobalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
 import { commonStyles } from '../styles/commonStyles';
 import { setupErrorLogging } from '../utils/errorLogger';
 
@@ -15,6 +17,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     try {
+      console.log('RootLayout mounted');
       // Set up global error logging
       setupErrorLogging();
 
@@ -23,11 +26,13 @@ export default function RootLayout() {
         if (emulate) {
           localStorage.setItem(STORAGE_KEY, emulate);
           setStoredEmulate(emulate);
+          console.log('Stored emulate parameter:', emulate);
         } else {
           // If no emulate parameter, try to get from localStorage
           const stored = localStorage.getItem(STORAGE_KEY);
           if (stored) {
             setStoredEmulate(stored);
+            console.log('Retrieved stored emulate parameter:', stored);
           }
         }
       }
@@ -49,6 +54,8 @@ export default function RootLayout() {
     insetsToUse = deviceToEmulate ? simulatedInsets[deviceToEmulate as keyof typeof simulatedInsets] || actualInsets : actualInsets;
   }
 
+  console.log('RootLayout rendering with insets:', insetsToUse);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={[commonStyles.wrapper, {
@@ -63,7 +70,10 @@ export default function RootLayout() {
             headerShown: false,
             animation: 'default',
           }}
-        />
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="pilot/[id]" options={{ headerShown: false }} />
+        </Stack>
       </SafeAreaView>
     </SafeAreaProvider>
   );
