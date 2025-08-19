@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import HomeScreen from './index';
 import PremiumScreen from './premium';
 import ProfileScreen from './profile';
+import PilotLogScreen from './pilotlog';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,12 @@ const tabColors = {
     inactive: '#CE93D8',
     gradient: ['#9C27B0', '#BA68C8'],
     background: 'rgba(156, 39, 176, 0.1)',
+  },
+  pilotlog: {
+    active: '#2196F3',
+    inactive: '#90CAF9',
+    gradient: ['#2196F3', '#42A5F5'],
+    background: 'rgba(33, 150, 243, 0.1)',
   },
   profile: {
     active: '#FF5722',
@@ -46,6 +53,9 @@ const TabIcon = ({ route, focused, size }: { route: any, focused: boolean, size:
       break;
     case 'premium':
       iconName = focused ? 'diamond' : 'diamond-outline';
+      break;
+    case 'pilotlog':
+      iconName = focused ? 'book' : 'book-outline';
       break;
     case 'profile':
       iconName = focused ? 'person' : 'person-outline';
@@ -158,6 +168,13 @@ export default function TabLayout() {
         component={PremiumScreen}
         options={{
           title: 'Premium',
+        }}
+      />
+      <Tab.Screen 
+        name="pilotlog" 
+        component={PilotLogScreen}
+        options={{
+          title: 'Pilot Log',
         }}
       />
       <Tab.Screen 

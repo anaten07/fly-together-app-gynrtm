@@ -341,4 +341,127 @@ export const commonStyles = StyleSheet.create({
     color: colors.text,
     fontWeight: '500',
   },
+  // Flight log styles
+  flightLogCard: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    ...shadows.small,
+  },
+  flightLogHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  flightLogRoute: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  flightLogAircraft: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  flightLogDuration: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  flightLogDate: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  flightLogTime: {
+    fontSize: 12,
+    color: colors.textSecondary,
+  },
+  flightLogBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+  },
+  flightLogBadgeText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  // App connection styles
+  appCard: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    ...shadows.small,
+  },
+  appIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  appHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  appInfo: {
+    flex: 1,
+  },
+  appName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  appDescription: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  appStatus: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  appStatusText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  appFeatures: {
+    marginBottom: 12,
+  },
+  appFeature: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  appFeatureText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginLeft: 6,
+  },
+  appActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  // Statistics styles
+  statsCard: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+  },
+  statsValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  statsLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 4,
+  },
 });
