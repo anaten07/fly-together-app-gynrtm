@@ -13,6 +13,8 @@ import { usePilots } from '../../hooks/usePilots';
 import { useWeather } from '../../hooks/useWeather';
 
 export default function HomeScreen() {
+  console.log('HomeScreen component rendering...');
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [showBooking, setShowBooking] = useState(false);
@@ -31,6 +33,10 @@ export default function HomeScreen() {
     autoRefresh: true,
     refreshInterval: 30
   });
+
+  // Debug logging
+  console.log('HomeScreen render - pilots:', pilots.length, 'loading:', pilotsLoading, 'error:', pilotsError);
+  console.log('HomeScreen render - weather:', weatherData.length, 'loading:', weatherLoading, 'error:', weatherError);
 
   const filters = [
     { id: 'all', title: 'All Pilots', icon: 'people' },
@@ -83,6 +89,23 @@ export default function HomeScreen() {
   return (
     <View style={commonStyles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+      
+      {/* Test message */}
+      <View style={{ padding: 20, backgroundColor: colors.success + '20', margin: 16, borderRadius: 8 }}>
+        <Text style={{ color: colors.success, fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>
+          ✅ App is working! HomeScreen is rendering.
+        </Text>
+      </View>
+      
+      {/* Debug info */}
+      <View style={{ padding: 16, backgroundColor: colors.info + '20', margin: 16, borderRadius: 8 }}>
+        <Text style={{ color: colors.info, fontSize: 12 }}>
+          Debug: Pilots: {pilots.length}, Loading: {pilotsLoading ? 'Yes' : 'No'}, Error: {pilotsError || 'None'}
+        </Text>
+        <Text style={{ color: colors.info, fontSize: 12 }}>
+          Weather: {weatherData.length}, Loading: {weatherLoading ? 'Yes' : 'No'}, Error: {weatherError || 'None'}
+        </Text>
+      </View>
       
       <LinearGradient
         colors={[colors.background, colors.surface]}
@@ -147,7 +170,7 @@ export default function HomeScreen() {
         </ScrollView>
 
         {/* Weather Summary */}
-        {weatherData.length > 0 && (
+        {(weatherData.length > 0 || weatherLoading) && (
           <View style={[commonStyles.card, { marginBottom: 20 }]}>
             <View style={commonStyles.cardHeader}>
               <Icon name="cloud" size={20} color={colors.primary} />
@@ -156,20 +179,26 @@ export default function HomeScreen() {
                 <Icon name="refresh" size={16} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {weatherData.slice(0, 5).map((weather) => (
-                <View key={weather.id} style={commonStyles.weatherCard}>
-                  <Text style={commonStyles.weatherStation}>{weather.station_id}</Text>
-                  <Text style={commonStyles.weatherCategory}>{weather.flight_category}</Text>
-                  <Text style={commonStyles.weatherTemp}>
-                    {weather.temperature ? `${Math.round(weather.temperature)}°F` : 'N/A'}
-                  </Text>
-                  <Text style={commonStyles.weatherWind}>
-                    {weather.wind_speed ? `${Math.round(weather.wind_speed)} kt` : 'Calm'}
-                  </Text>
-                </View>
-              ))}
-            </ScrollView>
+            {weatherLoading ? (
+              <View style={{ alignItems: 'center', padding: 20 }}>
+                <Text style={commonStyles.textSecondary}>Loading weather data...</Text>
+              </View>
+            ) : (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {weatherData.slice(0, 5).map((weather) => (
+                  <View key={weather.id} style={commonStyles.weatherCard}>
+                    <Text style={commonStyles.weatherStation}>{weather.station_id}</Text>
+                    <Text style={commonStyles.weatherCategory}>{weather.flight_category}</Text>
+                    <Text style={commonStyles.weatherTemp}>
+                      {weather.temperature ? `${Math.round(weather.temperature)}°F` : 'N/A'}
+                    </Text>
+                    <Text style={commonStyles.weatherWind}>
+                      {weather.wind_speed ? `${Math.round(weather.wind_speed)} kt` : 'Calm'}
+                    </Text>
+                  </View>
+                ))}
+              </ScrollView>
+            )}
           </View>
         )}
 
@@ -204,7 +233,16 @@ export default function HomeScreen() {
           </View>
         )}
 
-        {pilots.map((pilot) => (
+        {pilotsLoading && (
+          <View style={[commonStyles.card, { alignItems: 'center', padding: 40 }]}>
+            <Icon name="refresh" size={48} color={colors.primary} />
+            <Text style={[commonStyles.text, { textAlign: 'center', marginTop: 16 }]}>
+              Loading pilots...
+            </Text>
+          </View>
+        )}
+
+        {!pilotsLoading && pilots.map((pilot) => (
           <PilotCard
             key={pilot.id}
             pilot={{

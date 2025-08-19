@@ -7,16 +7,20 @@ export const colors = {
   secondary: '#64748b',
   accent: '#f59e0b',
   background: '#ffffff',
+  backgroundAlt: '#f1f5f9',
   surface: '#f8fafc',
   card: '#ffffff',
   text: '#1e293b',
   textSecondary: '#64748b',
   textLight: '#94a3b8',
+  textMuted: '#9ca3af',
+  textInverse: '#ffffff',
   border: '#e2e8f0',
   success: '#10b981',
   warning: '#f59e0b',
   error: '#ef4444',
   info: '#3b82f6',
+  shadowDark: '#000000',
 };
 
 export const gradients = {
@@ -41,9 +45,17 @@ export const shadows = {
     boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
     elevation: 8,
   },
+  orange: {
+    boxShadow: '0 4px 6px rgba(245, 158, 11, 0.3), 0 2px 4px rgba(245, 158, 11, 0.2)',
+    elevation: 4,
+  },
 };
 
 export const commonStyles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -307,5 +319,26 @@ export const commonStyles = StyleSheet.create({
     color: colors.primary,
     fontWeight: '500',
     marginRight: 4,
+  },
+  // Map styles
+  mapContainer: {
+    height: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  // Additional text styles
+  subtitleMedium: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  textLight: {
+    fontSize: 14,
+    color: colors.textLight,
+  },
+  textMedium: {
+    fontSize: 14,
+    color: colors.text,
+    fontWeight: '500',
   },
 });

@@ -20,7 +20,7 @@ export function useWeather(options: UseWeatherOptions = {}) {
 
   const fetchWeatherFromAPI = async () => {
     try {
-      console.log('Fetching weather from API...');
+      console.log('Fetching weather from API with stations:', options.stations);
       const response = await supabase.functions.invoke('fetch-aviation-weather', {
         body: {
           stations: options.stations,
@@ -28,12 +28,14 @@ export function useWeather(options: UseWeatherOptions = {}) {
         }
       });
 
+      console.log('Weather API full response:', response);
+
       if (response.error) {
         console.error('Error from weather API:', response.error);
         throw new Error(response.error.message || 'Failed to fetch weather');
       }
 
-      console.log('Weather API response:', response.data);
+      console.log('Weather API response data:', response.data);
       return response.data?.data || [];
     } catch (err) {
       console.error('Error fetching weather from API:', err);

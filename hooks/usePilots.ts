@@ -47,7 +47,7 @@ export function usePilots(options: UsePilotsOptions = {}) {
         return;
       }
 
-      console.log('Fetched pilots:', data?.length || 0);
+      console.log('Fetched pilots:', data?.length || 0, 'data:', data);
       setPilots(data || []);
     } catch (err) {
       console.error('Error in fetchPilots:', err);
